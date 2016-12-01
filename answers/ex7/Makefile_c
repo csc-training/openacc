@@ -1,0 +1,38 @@
+COMP=pgi
+
+ifeq ($(COMP),gnu)
+CC=mpicc
+FC=mpif90
+CCFLAGS=-g
+RUN=
+endif
+
+ifeq ($(COMP),pgi)
+CC=mpicc
+CCFLAGS=-g -acc -ta=nvidia,kepler+
+# CFLAGS=-g -traceback
+RUN=
+endif
+
+EXE=heat
+OBJS=pngwriter.o heat.o main.o
+
+EXES=$(EXE)
+
+all: $(EXES)
+
+# Dependencies
+heat.o: heat.c
+pngwriter.o: pngwriter.c
+
+$(EXE): $(OBJS) .ALWAYSEXEC
+	$(CC) $(CCFLAGS) $(OBJS) -o $@ -lpng
+
+%.o: %.c
+	$(CC) $(CCFLAGS) -c $< -o $@
+
+clean:
+	-/bin/rm -f $(EXES)
+	-/bin/rm -f a.out *.o *.mod *~ *.png
+
+.ALWAYSEXEC:
