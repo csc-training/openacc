@@ -1,7 +1,7 @@
 ## Hybrid Hello with MPI + OpenACC
 
 Write a simple hybrid program where each OpenACC compute task
-communicates using MPI. Implement the foll 
+communicates using MPI. Implement the following steps.
 
 1. The first MPI task sends a vector of some length initialized
 to its rank id to all other tasks.
