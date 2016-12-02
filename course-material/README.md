@@ -76,7 +76,7 @@ In this session we do the following exercises
 
 
 In this session we do the following exercises
- * Analyze performance of ex 5 (use answers if you did not finish them) 
+ * Analyze performance of exercise 5. Use [solution](/exercises/ex5/solution) if you did not finish it on your own in the last session.
  * [NVIDIA Lab 3](/nvidia-labs/lab3/) [steps 2 - 5](/nvidia-labs/lab3/steps-2-5.md) 
 
 
