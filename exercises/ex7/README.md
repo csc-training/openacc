@@ -6,4 +6,5 @@ an OpenACC accelerated version.
 A schematic representation of the row-wise domain decomposition using ghost
 layers looks like this:
 
-![Image of heat equation domain decomposition](./MPI_Heat_export.svg)
+![Image of heat equation domain decomposition](./MPI_Heat_export.png)
+
