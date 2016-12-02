@@ -10,5 +10,4 @@ OpenACC.
 3. Finally, the other tasks send the modified vector back to the
 first MPI task which outputs its contents to stdout.
 
-![Image of the MPI Hello messages]
-(MPI_Hello.svg)
+![Image of the MPI Hello messages](MPI_Hello.png)
