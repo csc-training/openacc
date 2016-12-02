@@ -64,7 +64,7 @@ In this session we do the following exercises
 
 In this session we do the following exercises
  * [Exercise 4 ](/exercises/ex4/)
- * [NVIDIA Lab 3]/nvidia-labs/lab3/) [steps 0 - 1](/nvidia-labs/lab3/steps-0-1.md) 
+ * [NVIDIA Lab 3](/nvidia-labs/lab3/) [steps 0 - 1](/nvidia-labs/lab3/steps-0-1.md) 
  * [Exercise 5 ](/exercises/ex5/)
   
 
@@ -77,7 +77,7 @@ In this session we do the following exercises
 
 In this session we do the following exercises
  * Analyze performance of ex 5 (use answers if you did not finish them) 
- * [NVIDIA Lab 3]/nvidia-labs/lab3/) [steps 2 - 5](/nvidia-labs/lab3/steps-2-5.md) 
+ * [NVIDIA Lab 3](/nvidia-labs/lab3/) [steps 2 - 5](/nvidia-labs/lab3/steps-2-5.md) 
 
 
 
