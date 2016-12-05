@@ -17,11 +17,11 @@ program vectorsum
      vecB(i) = vecA(i)**2
   end do
 
-  !$acc parallel loop
+  !$acc kernels
   do i = 1, nx
      vecC(i) = vecA(i) * vecB(i)
   end do
-  !$acc end parallel loop
+  !$acc end kernels
 
   ! Compute the check value
   write(*,*) 'Reduction sum: ', sum(vecC)

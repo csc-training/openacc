@@ -17,7 +17,7 @@ int main(void)
         vecB[i] = vecA[i] * vecA[i];
     }
 
-#pragma acc parallel loop 
+#pragma acc kernels
     for (i = 0; i < NX; i++) {
         vecC[i] = vecA[i] * vecB[i];
     }
