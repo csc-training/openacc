@@ -1,5 +1,5 @@
-const unsigned int WIDTH=16384;
-const unsigned int HEIGHT=16384;
+const unsigned int WIDTH=8192;
+const unsigned int HEIGHT=8192;
 const unsigned int MAX_ITERS=100;
 const unsigned int MAX_COLOR=255;
 const double xmin=-1.7;
