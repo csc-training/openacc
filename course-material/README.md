@@ -40,31 +40,44 @@
 
 # Instructions for running OpenACC exercises
 
-All exercises except the MPI labs can be done using the local classroom workstations. You may also use the GPU partition of Taito cluster.
+All exercises except the MPI labs can be done using the local classroom
+workstations. You may also use the GPU partition of Taito cluster.
 
 ## Local desktop computers
 
-Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI compiler installations. The PGI compiler is not in the PATH by default, but you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
+Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI
+compiler installations. The PGI compiler is not in the PATH by default, but
+you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
 
 ## Taito-GPU
 
-You can log into Taito GPU front-end node using ssh command ```ssh -Y trngXX@taito-gpu.csc.fi``` where ```XX``` is the number of your training account. You can also use your own CSC account if you have one.
+You can log into Taito GPU front-end node using ssh command ```ssh -Y
+trngXXX@taito-gpu.csc.fi``` where ```XXX``` is the number of your training
+account. You can also use your own CSC account if you have one.
 
-Before compiling the exercises you have to load the correct environment module using command ```module load openacc-env```. Serial jobs can be run interactively with srun command, for example
+Before compiling the exercises you have to load the correct environment module
+using command ```module load openacc-env/16.7```. Serial jobs can be run
+interactively with srun command, for example
 ```
 srun -n1 -pgpu --gres=gpu:1 -Ck80 ./my_program
 ```
 
-Multi-GPU jobs require a slightly different set of options, for example a MPI job that uses eight GPUs on two nodes and launch a single MPI task per GPU can be run with command
+Multi-GPU jobs require a slightly different set of options, for example a MPI
+job that uses eight GPUs on two nodes and launch a single MPI task per GPU can
+be run with command
 ```
 srun -n8 --ntasks-per-socket=2 -N2 --gres=gpu:4 -Ck80 ./my_program
 ```
 
 ### Reservation
 
-This course has a resource reservation that can be used for the exercises. You can run your job within the reservation with ```--reservation``` flag, such as ```srun --reservation=acc_course_wed -n1 -pgpu --gres=gpu:1 ./my_program```.
+This course has a resource reservation that can be used for the exercises. You
+can run your job within the reservation with ```--reservation``` flag, such as
+```srun --reservation=acc_course_wed -n1 -pgpu --gres=gpu:1 ./my_program```.
 
-Names of the reservations for Wednesday, Thursday and Friday are ```acc_course_wed```, ```acc_course_thu``` and ```acc_course_fri``` respectively.
+Names of the reservations for Wednesday, Thursday and Friday are
+```acc_course_wed```, ```acc_course_thu``` and ```acc_course_fri```
+respectively.
 
 #Exercises
 
