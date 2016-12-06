@@ -1,9 +1,12 @@
 NVIDIA OpenACC Course - Lab 3
 =============================
 
-In this lab you will build upon the work from lab 2 to add explicit data
-management directives, eliminating the need to use CUDA Unified Memory, and
-optimize the `matvec` kernel using the OpenACC `loop` directive. 
+In this lab you will build upon the work on a Conjugate Gradient
+solver from [lab
+2](https://github.com/NVIDIA-OpenACC-Course/nvidia-openacc-course-sources/tree/master/october-2015/labs/lab2)
+to add explicit data management directives, eliminating the need to
+use CUDA Unified Memory, and optimize the `matvec` kernel using the
+OpenACC `loop` directive.
 
 
 Steps
