@@ -39,8 +39,8 @@ program ex4_data
            unew(i,j) = factor * (u(i-1,j) + u(i+1,j) + u(i,j-1) + u(i,j+1))
         enddo
      enddo
-!     !$acc end parallel
-!     !$acc parallel
+     !$acc end parallel
+     !$acc parallel
      !$acc loop
      do j = 1, ny
         !$acc loop
