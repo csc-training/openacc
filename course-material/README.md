@@ -1,6 +1,15 @@
 # GPU Programming with OpenACC
 
-7-9 december, 2016
+7-9 december, 2016, at CSC - IT Center for Science.
+
+## Table of content
+ 1. [Schedule](#schedule)
+ 2. [Slides](#lecture-material)
+ 3. [Instructions for running OpenACC exercises](#instructions-for-running-openacc-exercises)
+ 4. [Exercises](#exercises)
+
+
+
 
 # Schedule
 
@@ -37,17 +46,40 @@
 | 12:45 - 16:00 | BYOC (break at 14:00)
 
 
+# Lecture material
+
+The [slides](https://events.prace-ri.eu/event/562/material/slides/) can be downloaded from the course [homepage](https://events.prace-ri.eu/event/562/) on the PRACE website.
 
 # Instructions for running OpenACC exercises
 
 All exercises except the MPI labs can be done using the local classroom
 workstations. You may also use the GPU partition of Taito cluster.
 
+
+## Downloading the exercises
+
+The exercises are in this repository in two different folders. In
+[openacc/exercises](/exercises/) are a set of exercises prepared by
+CSC, while in [openacc/nvidia-labs](/nvidia-labs/) exercises courtesy
+of Nvidia are located.
+
+To get the exercises you can clone the repository
+
+```
+git clone https://github.com/csc-training/openacc.git
+```
+
+This command will create a folder called ```openacc``` where all the
+materials are located. If the repository is updated during the course
+you can update your local copy of it with a ```git pull``` command.
+
+
 ## Local desktop computers
 
 Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI
 compiler installations. The PGI compiler is not in the PATH by default, but
 you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
+
 
 ## Taito-GPU
 
@@ -80,21 +112,6 @@ Names of the reservations for Wednesday, Thursday and Friday are
 respectively.
 
 #Exercises
-
-The exercises are in this repository in two different folders. In
-[openacc/exercises](/exercises/) are a set of exercises prepared by
-CSC, while in [openacc/nvidia-labs](/nvidia-labs/) exercises courtesy
-of Nvidia are located.
-
-To get the exercises you can clone the repository
-
-```
-git clone https://github.com/csc-training/openacc.git
-```
-
-This command will create a folder called ```openacc``` where all the
-materials are located. If the repository is updated during the course
-you can update your local copy of it with a ```git pull``` command.
 
 
 ## Introduction to accelerators  & OpenACC
