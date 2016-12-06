@@ -29,6 +29,7 @@ program ex4_data
 
   t = ftimer()
 
+  ! TODO: Parallelize this
   do iter = 1, niter
      !$acc parallel
      !$acc loop

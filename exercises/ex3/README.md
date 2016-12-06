@@ -1,10 +1,11 @@
 ## Reduction
 
-The file `ex3_dotprod(.c|.F90)` implements a simple dot product of two
-vectors. Try to parallelize the code by using OpenACC parallel loop or kernels
-pragmas. Are you able to get the same results between different runs? What is
-needed for correct computation?
+The file `doubleloops(.c|.F90)` implements a simple stencil update
+kernel. Search for a TODO tag and try to parallelize the given loop
+nest with OpenACC parallel or kernels pragmas. Pay attention to the
+compiler diagnostics output.
 
-
-
-
+Compile a reference version without OpenACC and compare the
+results. Are you able to get the same results between different runs?
+What if you try to use taito-gpu instead of the desktop system or vice
+versa?

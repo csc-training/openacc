@@ -69,30 +69,18 @@ int main(int argc, char **argv)
 
     t_start = clock();
 
-    /* Parallelize this */
+    /* TODO: Parallelize this */
     for (iter = 0; iter < niter; iter++) {
-#pragma acc parallel
-        {
-#pragma acc loop
-            for (i = 1; i < nx + 1; i++)
-#pragma acc loop
-                for (j = 1; j < ny + 1; j++)
-                {
-                    unew[i][j] = factor * (u[i-1][j] + u[i+1][j] + 
-                            u[i][j-1] + u[i][j+1]);
-                }
-        }
-#pragma acc parallel
-        {
-#pragma acc loop
-            for (i = 1; i < nx + 1; i++)
-#pragma acc loop
-                for (j = 1; j < ny + 1; j++) 
-                {
-                    u[i][j] = factor * (unew[i-1][j] + unew[i+1][j] + 
-                            unew[i][j-1] + unew[i][j+1]);
-                }
-        }
+    for (i = 1; i < nx + 1; i++)
+        for (j = 1; j < ny + 1; j {
+            unew[i][j] = factor * (u[i-1][j] + u[i+1][j] + 
+                    u[i][j-1] + u[ij+1]);
+    }
+        for (i = 1; i < nx + 1; i++)
+            for (j = 1; j < ny + 1; j++) {
+                u[i][j] = factor * (unew[i-1][j] + unew[i+1][j] + 
+                     unew[i][j-1] + unew[i][j+1]);
+            }
     }
 
     /* Compute a reference sum, do not parallelize this! */

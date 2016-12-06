@@ -29,25 +29,18 @@ program ex4_data
 
   t = ftimer()
 
+  ! TODO: Parallelize this
   do iter = 1, niter
-     !$acc parallel
-     !$acc loop
      do j = 1, ny
-        !$acc loop
         do i = 1, nx
            unew(i,j) = factor * (u(i-1,j) + u(i+1,j) + u(i,j-1) + u(i,j+1))
         enddo
      enddo
-!     !$acc end parallel
-!     !$acc parallel
-     !$acc loop
      do j = 1, ny
-        !$acc loop
         do i = 1, nx
            u(i,j) = factor * (unew(i-1,j) + unew(i+1,j) + unew(i,j-1) + unew(i,j+1))
         enddo
      enddo
-     !$acc end parallel
   enddo
 
   ! Check sum, do not parallelize this loop!
