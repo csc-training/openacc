@@ -81,6 +81,22 @@ respectively.
 
 #Exercises
 
+The exercises are in this repository in two different folders. In
+[openacc/exercises](/exercises/) are a set of exercises prepared by
+CSC, while in [openacc/nvidia-labs](/nvidia-labs/) exercises courtesy
+of Nvidia are located.
+
+To get the exercises you can clone the repository
+
+```
+git clone https://github.com/csc-training/openacc.git
+```
+
+This command will create a folder called ```openacc``` where all the
+materials are located. If the repository is updated during the course
+you can update your local copy of it with a ```git pull``` command.
+
+
 ## Introduction to accelerators  & OpenACC
 
 In this session we do the following exercises
@@ -88,21 +104,12 @@ In this session we do the following exercises
  * [Exercise 2 ](/exercises/ex2/)
  * [Exercise 3 ](/exercises/ex3/)
 
-<!--INCLUDE-exercises/ex1/README.md-->
-<!--INCLUDE-exercises/ex2/README.md-->
-<!--INCLUDE-exercises/ex3/README.md-->
-
-
 ## OpenACC data management
 
 In this session we do the following exercises
  * [Exercise 4 ](/exercises/ex4/)
  * [NVIDIA Lab 3](/nvidia-labs/lab3/) [steps 0 - 1](/nvidia-labs/lab3/steps-0-1.md)
  * [Exercise 5 ](/exercises/ex5/)
-
-
-
-<!--INCLUDE-exercises/ex4/README.md-->
 
 
 ## Profiling and performance optimization
