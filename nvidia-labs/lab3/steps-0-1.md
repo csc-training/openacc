@@ -33,13 +33,13 @@ command. You may change the options passed to the compiler by modifying the
 `CFLAGS` variable in `c99/Makefile` or `FCFLAGS` in `f90/Makefile`. You should
 not need to modify anything in the Makefile except these compiler flags.
 
-Step 1 - Step 1 - Express Data Movement
+Step 1 - Express Data Movement
 ---------------------------------------
 
-In the previous lab we used CUDA Unified Memory, which we enabled with the
-`ta=tesla:managed` compiler option, to eliminate the need for data management
-directives. Replace this compiler flag in the Makefile with `-ta=tesla` and try
-to rebuild the code.
+In the provided makefile we use CUDA Unified Memory, which we have
+enabled with the `ta=tesla:managed` compiler option, to eliminate the
+need for data management directives. Replace this compiler flag in the
+Makefile with `-ta=tesla` and try to rebuild the code.
 
 ### C/C++
 With the managed memory option removed the C/C++ version will fail to build
@@ -66,6 +66,10 @@ tolerance value will be incorrect with the managed memory option removed.
      Iteration: 80 Tolerance: 4.006700E+08
      Iteration: 90 Tolerance: 4.006700E+08
       Total Iterations:          100
+
+Can you figure out why? Look at the parameters used in calling the
+`waxpby` function in `main.F90` for hints, as well as the compiler
+info.
 
 ---
 
