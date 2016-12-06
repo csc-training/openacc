@@ -9,8 +9,8 @@ optimize the `matvec` kernel using the OpenACC `loop` directive.
 Steps
 ---------
 
-[Steps 0 and 1](steps-0-1.md)
-[Steps 2 to 5](steps-2-5.md)
+* [Steps 0 and 1](steps-0-1.md)
+* [Steps 2 to 5](steps-2-5.md)
 
 
 Conclusion
