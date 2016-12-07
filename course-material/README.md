@@ -90,7 +90,7 @@ option ```-Minfo=accel```.
 
 Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI
 compiler installations. The PGI compiler is not in the PATH by default, but
-you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
+you can initialize the environment using command ```source ~/pgi/pgi16.10```.
 
 
 ## Running on Taito-GPU
