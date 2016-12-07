@@ -58,7 +58,7 @@ void update(float ** newarr, float ** oldarr, float * norm, int nx, int ny)
     {
       lnorm = 0;
 #pragma acc parallel loop reduction(max:lnorm) private(i,j)	\
-  present(newarr[0:nx+2][0:nx+2], oldarr[0:nx+2][0:nx+2]) collapse(2)
+  present(newarr, oldarr) collapse(2)
       for (i=1; i<nx+1; i++)
 	for (j=1; j<ny+1; j++) 
 	  {
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
   u = malloc_2d(nx+2, ny+2);
   unew = malloc_2d(nx+2, ny+2);
  
-#pragma acc data create(u[0:nx+2][0:nx+2],unew[0:nx+2][0:nx+2])
+#pragma acc data create(u[0:nx+2][0:ny+2],unew[0:nx+2][0:ny+2])
   {
     init(u, nx, ny);
     init(unew, nx, ny);
