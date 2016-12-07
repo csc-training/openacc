@@ -73,7 +73,18 @@ This command will create a folder called ```openacc``` where all the
 materials are located. If the repository is updated during the course
 you can update your local copy of it with a ```git pull``` command.
 
+## Compiling with PGI compiler
 
+PGI compiler commands for C and Fortran are ```pgcc``` and
+```pgfortran```.  OpenACC compilation can be enabled with option
+```-acc```. Note that without this flag, a non-accelerated version
+will be compiled. In addition to the acc flag, you have to specify the
+type of the accelerator with ```-ta=nvidia,kepler``` flag.  If you run
+these exercises on some other system, you have to modify the type of
+the accelerator accordingly. You can check the type of the acclerator
+and recommended flags with command ```pgaccelinfo```. If you want to
+get detailed information on OpenACC code generation, you can use
+option ```-Minfo=accel```.
 
 ## Running on local desktop computers
 
