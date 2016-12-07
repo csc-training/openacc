@@ -74,14 +74,15 @@ materials are located. If the repository is updated during the course
 you can update your local copy of it with a ```git pull``` command.
 
 
-## Local desktop computers
+
+## Running on local desktop computers
 
 Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI
 compiler installations. The PGI compiler is not in the PATH by default, but
 you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
 
 
-## Taito-GPU
+## Running on taito-gpu
 
 You can log into Taito GPU front-end node using ssh command ```ssh -Y
 trngXXX@taito-gpu.csc.fi``` where ```XXX``` is the number of your training
