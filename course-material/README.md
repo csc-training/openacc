@@ -52,8 +52,8 @@ The [slides](https://events.prace-ri.eu/event/562/material/slides/) can be downl
 
 # Instructions for running OpenACC exercises
 
-All exercises except the MPI labs can be done using the local classroom
-workstations. You may also use the GPU partition of Taito cluster.
+All exercises except the MPI labs can be done using the local
+classroom workstations. You may also use the [Taito-GPU](https://research.csc.fi/taito-gpu) partition of Taito cluster.
 
 
 ## Downloading the exercises
@@ -93,9 +93,9 @@ compiler installations. The PGI compiler is not in the PATH by default, but
 you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
 
 
-## Running on taito-gpu
+## Running on Taito-GPU
 
-You can log into [Taito GPU](https://research.csc.fi/taito-gpu)
+You can log into [Taito-GPU](https://research.csc.fi/taito-gpu)
 front-end node using ssh command ```ssh -Y trngXXX@taito-gpu.csc.fi```
 where ```XXX``` is the number of your training account. You can also
 use your own CSC account if you have one.
