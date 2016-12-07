@@ -52,8 +52,8 @@ The [slides](https://events.prace-ri.eu/event/562/material/slides/) can be downl
 
 # Instructions for running OpenACC exercises
 
-All exercises except the MPI labs can be done using the local classroom
-workstations. You may also use the GPU partition of Taito cluster.
+All exercises except the MPI labs can be done using the local
+classroom workstations. You may also use the [Taito-GPU](https://research.csc.fi/taito-gpu) partition of Taito cluster.
 
 
 ## Downloading the exercises
@@ -90,14 +90,15 @@ option ```-Minfo=accel```.
 
 Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI
 compiler installations. The PGI compiler is not in the PATH by default, but
-you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
+you can initialize the environment using command ```source ~/pgi/pgi16.10```.
 
 
-## Running on taito-gpu
+## Running on Taito-GPU
 
-You can log into Taito GPU front-end node using ssh command ```ssh -Y
-trngXXX@taito-gpu.csc.fi``` where ```XXX``` is the number of your training
-account. You can also use your own CSC account if you have one.
+You can log into [Taito-GPU](https://research.csc.fi/taito-gpu)
+front-end node using ssh command ```ssh -Y trngXXX@taito-gpu.csc.fi```
+where ```XXX``` is the number of your training account. You can also
+use your own CSC account if you have one.
 
 Before compiling the exercises you have to load the correct environment module
 using command ```module load openacc-env/16.7```. Serial jobs can be run
