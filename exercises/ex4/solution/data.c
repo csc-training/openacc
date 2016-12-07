@@ -146,7 +146,7 @@ int main(int argc, char **argv)
   free_2d(u);
   free_2d(unew);
 
-  mlups = iter*nx*ny*1.0e-6;
+  mlups = 1.0e-6 * iter * nx * ny;  
   t_end = clock();
   dt = ((float)(t_end-t_start)) / CLOCKS_PER_SEC;
   printf("'Stencil: norm =%18.16f with iter = %d\n",norm,iter);
