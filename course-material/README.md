@@ -95,9 +95,10 @@ you can initialize the environment using command ```source ~/pgi/pgi-16.10```.
 
 ## Running on taito-gpu
 
-You can log into Taito GPU front-end node using ssh command ```ssh -Y
-trngXXX@taito-gpu.csc.fi``` where ```XXX``` is the number of your training
-account. You can also use your own CSC account if you have one.
+You can log into [Taito GPU](https://research.csc.fi/taito-gpu)
+front-end node using ssh command ```ssh -Y trngXXX@taito-gpu.csc.fi```
+where ```XXX``` is the number of your training account. You can also
+use your own CSC account if you have one.
 
 Before compiling the exercises you have to load the correct environment module
 using command ```module load openacc-env/16.7```. Serial jobs can be run
