@@ -134,7 +134,7 @@ void evolve(field * curr, field * prev, double a, double dt)
   dy2 = prev->dy2;
 
 #pragma acc parallel loop private(i,j) copyin(pdata[0:nx+2][0:ny+2]) \
-  copyout(cdata[1:nx][1:ny]) collapse(2)
+  copyout(cdata[0:nx+2][0:ny+2]) collapse(2)
     for (i = 1; i < nx + 1; i++)
         for (j = 1; j < ny + 1; j++) {
             cdata[i][j] = pdata[i][j] + a * dt *

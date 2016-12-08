@@ -158,7 +158,7 @@ contains
     pdata => prev % data
 
     !$acc parallel loop private(i,j) copyin(pdata(0:nx+1,0:ny+1)) &
-    !$acc               copyout(cdata(1:nx,1:ny)) collapse(2)
+    !$acc               copyout(cdata(0:nx+1,0:ny+1)) collapse(2)
     do j=1,ny
        do i=1,nx
           cdata(i, j) = pdata(i, j) + a * dt * &
