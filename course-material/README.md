@@ -75,8 +75,11 @@ you can update your local copy of it with a ```git pull``` command.
 
 ## Compiling with PGI compiler
 
-PGI compiler commands for C and Fortran are ```pgcc``` and
-```pgfortran```.  OpenACC compilation can be enabled with option
+PGI compiler commands  are
+ - `pgcc` for C
+ - `pgfortran` for fortran
+ - `pgc++` for C++
+OpenACC compilation can be enabled with option
 ```-acc```. Note that without this flag, a non-accelerated version
 will be compiled. In addition to the acc flag, you have to specify the
 type of the accelerator with ```-ta=nvidia,kepler``` flag.  If you run
@@ -85,6 +88,13 @@ the accelerator accordingly. You can check the type of the acclerator
 and recommended flags with command ```pgaccelinfo```. If you want to
 get detailed information on OpenACC code generation, you can use
 option ```-Minfo=accel```.
+
+At the end of this course you will compile MPI programs. Then you should use
+MPI wrapper command for compiling the applications, which will include all options 
+and libraries needed by MPI. On taito-GPU, where the MPI exercises are done, the wrappers are called
+ - `mpicc` for C
+ - `mpif90` for fortran
+ - `mpicxx` for C++
 
 ## Running on local desktop computers
 
