@@ -22,7 +22,6 @@ int main() {
   for(int block = 0; block < num_blocks; block++ ) {
     int start = block * (HEIGHT/num_blocks),
         end   = start + (HEIGHT/num_blocks);
-#pragma acc update device(image[block*block_size:block_size])
 #pragma acc parallel loop
     for(int y=start;y<end;y++) {
       for(int x=0;x<WIDTH;x++) {
