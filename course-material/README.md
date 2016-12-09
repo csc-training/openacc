@@ -101,12 +101,16 @@ where ```XXX``` is the number of your training account. You can also
 use your own CSC account if you have one.
 
 Before compiling the exercises you have to load the correct environment module
-using command ```module load openacc-env/16.7```. Serial jobs can be run
-interactively with srun command, for example
+`openacc-env/16.7` as well as reload the git module to access this repository
+```
+module load openacc-env/16.7
+module load git
+```
+Serial jobs can be run interactively with srun command, for example
+
 ```
 srun -n1 -pgpu --gres=gpu:1 -Ck80 ./my_program
 ```
-
 Multi-GPU jobs require a slightly different set of options, for example a MPI
 job that uses eight GPUs on two nodes and launch a single MPI task per GPU can
 be run with command
