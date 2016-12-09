@@ -4,7 +4,7 @@
 
 ## Table of content
  1. [Schedule](#schedule)
- 2. [Slides](#lecture-material)
+ 2. [Material](#lecture-material)
  3. [Instructions for running OpenACC exercises](#instructions-for-running-openacc-exercises)
  4. [Exercises](#exercises)
 
@@ -48,7 +48,15 @@
 
 # Lecture material
 
-The [slides](https://events.prace-ri.eu/event/562/material/slides/) can be downloaded from the course [homepage](https://events.prace-ri.eu/event/562/) on the PRACE website.
+The [slides](https://events.prace-ri.eu/event/562/material/slides/) for the lectures of this course can be downloaded from the course [homepage](https://events.prace-ri.eu/event/562/) on the PRACE website.
+
+Other external material
+ - [openacc.org](http://www.openacc.org)
+ - [openacc 2.5 specifications](http://www.openacc.org/sites/default/files/OpenACC_2pt5.pdf)
+ - [NVIDIA Accelerated Commputing ](https://developer.nvidia.com/accelerated-computing)
+ - [NVIDIA OpenACC resources](https://developer.nvidia.com/openacc)
+ - [PGI compiler suite](http://www.pgroup.com/) Free of charge OpenACC compiler
+ 
 
 # Instructions for running OpenACC exercises
 
@@ -175,3 +183,6 @@ In this session we do the following exercises
 In this session we do the following exercises
  * [Exercise 6 ](/exercises/ex6/)
  * [Exercise 7 ](/exercises/ex7/)
+
+
+
