@@ -2,18 +2,20 @@ program ex4_data
 #ifdef _OPENACC
   use openacc
 #endif
+  use iso_fortran_env, only : real32, real64
   implicit none
 
-  integer, parameter :: sp = selected_real_kind(8)
+  integer, parameter :: sp = real32
+  integer, parameter :: dp = real64
   real(kind=sp) :: eps
 
   real(kind=sp), allocatable, dimension(:,:) :: u, unew
   real(kind=sp) :: norm, mlups
-  integer :: maxiter,nx,ny,iter,maxth,nargs,ndef
+  integer :: maxiter, nx, ny, iter, maxth, nargs, ndef
   character(len=12) arg
-  real(8) :: t, dt
+  real(kind=dp) :: t, dt
 
-  eps = real(0.5e-3, sp)
+  eps = 0.5e-3
   ndef = 2400
   nargs = command_argument_count()
 
@@ -34,7 +36,7 @@ program ex4_data
      if (ny < 1) ny = ndef
   endif
 
-  maxiter = int(real(1, sp) / eps)
+  maxiter = int(1.0_sp / eps)
   maxth = 1
   write(0,'(a,4(1x,i0),1x,g15.6))') &
        & 'Stencil: nx,ny,maxiter,maxth,eps=',&
@@ -76,15 +78,16 @@ contains
     implicit none
     real(kind=sp), intent(out) :: new(0:nx+1,0:ny+1)
     integer i,j
+
     !$acc parallel loop private(i,j) present(new)
-    do j=0,ny+1
-       do i=0,nx+1
-          new(i,j) = real(0, sp)
+    do j = 0, ny+1
+       do i = 0, nx+1
+          new(i,j) = 0.0_sp
        enddo
     enddo
     !$acc kernels present(new)
-    new(:,ny+1) = real(1, sp)
-    new(nx+1,:) = real(1, sp)
+    new(:,ny+1) = 1.0_sp
+    new(nx+1,:) = 1.0_sp
     !$acc end kernels
   end subroutine init
 
@@ -95,19 +98,20 @@ contains
     real(kind=sp), optional, intent(out) :: norm
     real(kind=sp), parameter :: factor = 0.25_sp
     integer i,j
+
     if (present(norm)) then
        norm = 0.0_sp
        !$acc parallel loop reduction(max:norm) private(i,j) present(new,old) collapse(2)
-       do j=1,ny
-          do i=1,nx
+       do j = 1, ny
+          do i = 1, nx
              new(i,j) = factor*(old(i-1,j) + old(i+1,j) + old(i,j-1) + old(i,j+1))
              norm = max(norm,abs(new(i,j) - old(i,j)))
           enddo
        enddo
     else
        !$acc parallel loop private(i,j) present(new,old) collapse(2)
-       do j=1,ny
-          do i=1,nx
+       do j = 1, ny
+          do i = 1, nx
              new(i,j) = factor*(old(i-1,j) + old(i+1,j) + old(i,j-1) + old(i,j+1))
           enddo
        enddo
@@ -118,6 +122,7 @@ contains
     implicit none
     real(kind=8) :: ftimer
     integer :: t, rate
+
     call system_clock(t,count_rate=rate)
     ftimer = real(t,kind(ftimer))/real(rate,kind(ftimer))
   end function ftimer

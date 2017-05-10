@@ -4,9 +4,10 @@
 !
 
 module heat
+  use ISO_FORTRAN_ENV, only : real32, real64
   implicit none
 
-  integer, parameter :: dp = SELECTED_REAL_KIND(12)
+  integer, parameter :: dp = real64
 
   real(kind=dp), parameter :: DX = 0.01, DY = 0.01  ! Fixed grid spacing
 
@@ -17,7 +18,7 @@ module heat
      real(kind=dp) :: dy
      real(kind=dp) :: dx2
      real(kind=dp) :: dy2
-     real(kind=dp), dimension(:,:), pointer, contiguous :: data
+     real(kind=dp), dimension(:,:), pointer, contiguous :: data => NULL()
   end type field
 
 contains
@@ -57,14 +58,14 @@ contains
     ! Square of the disk radius
     radius2 = (field0%nx / 6.0)**2
 
-    do j=0, field0%ny+1
-       do i=0, field0%nx+1
-          ds2 = (i - field0%nx / 2.0 + 1)**2 + &
-               (j - field0%ny / 2.0 + 1)**2
+    do j = 0, field0%ny+1
+       do i = 0, field0%nx+1
+          ds2 = (i - field0%nx / 2.0_dp + 1)**2 + &
+               (j - field0%ny / 2.0_dp + 1)**2
           if (ds2 < radius2) then
-             field0%data(i,j) = 5.0
+             field0%data(i,j) = 5.0_dp
           else
-             field0%data(i,j) = 65.0
+             field0%data(i,j) = 65.0_dp
           end if
        end do
     end do
@@ -82,21 +83,13 @@ contains
   !   curr, prev (type(field)): the two variables that are swapped
   subroutine swap_fields(curr, prev)
     implicit none
-
     type(field), intent(inout) :: curr, prev
-    real(kind=dp), allocatable, dimension(:,:) :: tmp
-
-    ! call move_alloc(curr%data, tmp)
-    ! call move_alloc(prev%data, curr%data)
-    ! call move_alloc(tmp, prev%data)
+    real(kind=dp), pointer, contiguous, dimension(:,:) :: tmp
     
-    ! Workaround to avoid compiler bug causing 
-    ! an internal compiler error in pgf90 (14.4) 
-    ! when move_alloc is being used
-    prev % data(:,:) = curr % data(:,:)
-    ! curr % data(lbound(curr % data, 1)+1:ubound(curr % data, 1)-1, &
-    !             lbound(curr % data, 2)+1:ubound(curr % data, 2)-1) = real(0,dp)
-  end subroutine swap_fields
+    tmp => prev%data
+    prev%data => curr%data
+    curr%data => tmp
+end subroutine swap_fields
 
   ! Copy the data from one field to another
   ! Arguments:
@@ -104,7 +97,6 @@ contains
   !   to_field (type(field)): variable to copy to
   subroutine copy_fields(from_field, to_field)
     implicit none
-
     type(field), intent(in) :: from_field
     type(field), intent(out) :: to_field
 
@@ -145,13 +137,13 @@ contains
     type(field), intent(inout) :: curr, prev
     real(kind=dp) :: a, dt
     real(kind=dp) :: dx2, dy2
-    integer :: i, j, nx, ny, allocstat
+    integer :: i, j, nx, ny
 
     ! Variables for memory access outside of a type
-    real(kind=dp), pointer, contiguous :: cdata(:,:), pdata(:,:)
-
-    nx = curr%nx
-    ny = curr%ny
+    real(kind=dp), pointer, contiguous, dimension(:,:) :: cdata, pdata
+    
+    nx = curr % nx
+    ny = curr % ny
     dx2 = curr % dx2
     dy2 = curr % dy2
     cdata => curr % data
@@ -159,12 +151,12 @@ contains
 
     !$acc parallel loop private(i,j) copyin(pdata(0:nx+1,0:ny+1)) &
     !$acc               copyout(cdata(0:nx+1,0:ny+1)) collapse(2)
-    do j=1,ny
-       do i=1,nx
+    do j = 1, ny
+       do i = 1, nx
           cdata(i, j) = pdata(i, j) + a * dt * &
-               & ((pdata(i-1, j) - real(2, dp)*pdata(i, j) + &
+               & ((pdata(i-1, j) - 2.0_dp*pdata(i, j) + &
                &   pdata(i+1, j)) / dx2 + &
-               &  (pdata(i, j-1) - real(2, dp)*pdata(i, j) + &
+               &  (pdata(i, j-1) - 2.0_dp*pdata(i, j) + &
                &   pdata(i, j+1)) / dy2)
        end do
     end do

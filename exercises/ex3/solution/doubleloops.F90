@@ -5,16 +5,18 @@ program ex4_data
 #endif
   implicit none
 
-  real(kind=real64) :: eps
-  real(kind=real64), allocatable, dimension(:,:) :: u, unew
-  real(kind=real64) :: norm, mlups, checksum
+  integer, parameter :: dp = real64
+
+  real(kind=dp) :: eps
+  real(kind=dp), allocatable, dimension(:,:) :: u, unew
+  real(kind=dp) :: norm, mlups, checksum
   integer :: nx,ny,iter,maxth,nargs,ndef,i,j
   integer, parameter :: niter = 2
   character(len=12) arg
-  real(kind=real64), parameter :: factor = 0.25_real64
-  real(kind=real64) :: t, dt
+  real(kind=dp), parameter :: factor = 0.25_dp
+  real(kind=dp) :: t, dt
 
-  eps = real(0.5e-3, kind=real64)
+  eps = 0.5e-3_dp
   ndef = 1022
   nargs = command_argument_count()
 
@@ -52,7 +54,7 @@ program ex4_data
   enddo
 
   ! Check sum, do not parallelize this loop!
-  checksum = 0.0_real64
+  checksum = 0.0_dp
   do j = 1, ny
      do i = 1, nx
         checksum = checksum + unew(i,j)
@@ -61,7 +63,7 @@ program ex4_data
 
   deallocate(u,unew)
 
-  mlups = real(iter, kind=real64) * real(nx, kind=real64) * real(ny, kind=real64) * real(1.0e-6, kind=real64)
+  mlups = real(iter, kind=dp) * real(nx, kind=dp) * real(ny, kind=dp) * real(1.0e-6, kind=dp)
   dt = ftimer() - t
   write(*,'(3(a,f12.6))')   'Stencil: Time =',dt,' sec, MLups/s=',mlups/dt,' check sum: ',checksum
 
@@ -69,23 +71,23 @@ contains
 
   subroutine init(new)
     implicit none
-    real(kind=real64), intent(out) :: new(0:nx+1,0:ny+1)
+    real(kind=dp), intent(out) :: new(0:nx+1,0:ny+1)
     integer i,j
 
     do j = 0, ny + 1
        do i = 0, nx + 1
-          new(i,j) = 0_real64
+          new(i,j) = 0.0_dp
        enddo
     enddo
 
-    new(:,ny+1) = 1_real64
-    new(nx+1,:) = 1_real64
+    new(:,ny+1) = 1.0_dp
+    new(nx+1,:) = 1.0_dp
 
   end subroutine init
 
   function ftimer()
     implicit none
-    real(kind=real64) :: ftimer
+    real(kind=dp) :: ftimer
     integer :: t, rate
 
     call system_clock(t,count_rate=rate)
