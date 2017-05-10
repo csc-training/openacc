@@ -147,7 +147,7 @@ Names of the reservations for Wednesday, Thursday and Friday are
 ```acc_course_wed```, ```acc_course_thu``` and ```acc_course_fri```
 respectively.
 
-#Exercises
+# Exercises
 
 
 ## Introduction to accelerators  & OpenACC
