@@ -1,6 +1,6 @@
 # Exercises
 
-## Introduction to accelerators  & OpenACC
+## Introduction to accelerators & OpenACC
 
 In this session we do the following exercises
 
@@ -27,4 +27,5 @@ In this session we do the following exercises
 
 In this session we do the following exercises
 
+- [Curand](/exercises/curand)
 - [NVIDIA Lab 4](/nvidia-labs/lab4.pipelining/)

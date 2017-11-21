@@ -1,6 +1,6 @@
 # OpenACC
 
-This repository containes the exercises used in CSCs OpenACC courses.
+This repository containes the exercises used in CSC's OpenACC courses.
 
 The exercises and instructions for running them are described in this [document](course-material/README.md)
 
