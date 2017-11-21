@@ -95,7 +95,7 @@ contains
     real(kind=sp), optional, intent(out) :: norm
     real(kind=sp), parameter :: factor = 0.25_sp
     integer i,j
-    
+
     if (present(norm)) then
        norm = 0.0_sp
        ! TODO: Implement computation with OpenACC on device

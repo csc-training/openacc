@@ -2,22 +2,15 @@
 !
 !  Copyright (C) 2014  CSC - IT Center for Science Ltd.
 !
-!  Licensed under the terms of the GNU General Public License as published by
-!  the Free Software Foundation, either version 3 of the License, or
-!  (at your option) any later version.
-!
-!  Code is distributed in the hope that it will be useful,
-!  but WITHOUT ANY WARRANTY; without even the implied warranty of
-!  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-!  GNU General Public License for more details.
-!
-!  Copy of the GNU General Public License can be onbtained from
-!  see <http://www.gnu.org/licenses/>.
 
 module heat
+  use ISO_FORTRAN_ENV, only : real32, real64
+#ifdef _OPENACC
+  use openacc
+#endif
   implicit none
 
-  integer, parameter :: dp = SELECTED_REAL_KIND(12)
+  integer, parameter :: dp = real64
 
   real(kind=dp), parameter :: DX = 0.01, DY = 0.01  ! Fixed grid spacing
 
@@ -28,7 +21,7 @@ module heat
      real(kind=dp) :: dy
      real(kind=dp) :: dx2
      real(kind=dp) :: dy2
-     real(kind=dp), dimension(:,:), pointer, contiguous :: data
+     real(kind=dp), dimension(:,:), pointer, contiguous :: data => NULL()
   end type field
 
 contains
@@ -68,14 +61,14 @@ contains
     ! Square of the disk radius
     radius2 = (field0%nx / 6.0)**2
 
-    do j=0, field0%ny+1
-       do i=0, field0%nx+1
-          ds2 = (i - field0%nx / 2.0 + 1)**2 + &
-               (j - field0%ny / 2.0 + 1)**2
+    do j = 0, field0%ny+1
+       do i = 0, field0%nx+1
+          ds2 = (i - field0%nx / 2.0_dp + 1)**2 + &
+               (j - field0%ny / 2.0_dp + 1)**2
           if (ds2 < radius2) then
-             field0%data(i,j) = 5.0
+             field0%data(i,j) = 5.0_dp
           else
-             field0%data(i,j) = 65.0
+             field0%data(i,j) = 65.0_dp
           end if
        end do
     end do
@@ -94,14 +87,12 @@ contains
   subroutine swap_fields(curr, prev)
     implicit none
 
-    type(field) :: curr, prev
+    type(field), intent(inout) :: curr, prev
     real(kind=dp), pointer, contiguous, dimension(:,:) :: tmp
-    integer :: i, j
-
-    ! Note: the data is kept fully on the device during computation
-    tmp => curr % data
-    curr % data => prev % data
-    prev % data => tmp
+    
+    tmp => prev%data
+    prev%data => curr%data
+    curr%data => tmp
   end subroutine swap_fields
 
   ! Copy the data from one field to another
@@ -151,27 +142,27 @@ contains
     type(field), intent(inout) :: curr, prev
     real(kind=dp) :: a, dt
     real(kind=dp) :: dx2, dy2
-    integer :: i, j, nx, ny, allocstat
+    integer :: i, j, nx, ny
 
     ! Variables for memory access outside of a type
-    real(kind=dp), pointer, contiguous :: cdata(:,:), pdata(:,:)
+    real(kind=dp), pointer, contiguous, dimension(:,:) :: cdata, pdata
 
     ! HINT: to help the compiler do not access 
     ! type components within OpenACC parallel regions
-    nx = curr%nx
-    ny = curr%ny
+    nx = curr % nx
+    ny = curr % ny
     dx2 = curr % dx2
     dy2 = curr % dy2
     cdata => curr % data
     pdata => prev % data
     
     ! TODO: Implement computation on device with OpenACC
-    do j=1,ny
-       do i=1,nx
+    do j = 1, ny
+       do i = 1, nx
           cdata(i, j) = pdata(i, j) + a * dt * &
-               & ((pdata(i-1, j) - real(2, dp)*pdata(i, j) + &
+               & ((pdata(i-1, j) - 2.0_dp*pdata(i, j) + &
                &   pdata(i+1, j)) / dx2 + &
-               &  (pdata(i, j-1) - real(2, dp)*pdata(i, j) + &
+               &  (pdata(i, j-1) - 2.0_dp*pdata(i, j) + &
                &   pdata(i, j+1)) / dy2)
        end do
     end do
@@ -212,11 +203,11 @@ contains
     ! (without ghost layers) so we need array for that
     integer :: nx, ny, stat
     real(kind=dp), pointer, contiguous :: cdata(:,:)
-    
+
     cdata => curr % data
- 
-    nx = curr%nx
-    ny = curr%ny
+
+    nx = curr % nx
+    ny = curr % ny
 
     write(filename,'(A5,I5.5,A4,A)')  'heat_', iter, '.png'
     stat = save_png(cdata(1:nx,1:ny), nx, ny, &

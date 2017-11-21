@@ -63,8 +63,8 @@ contains
 
     do j = 0, field0%ny+1
        do i = 0, field0%nx+1
-          ds2 = (i - field0%nx / 2.0 + 1)**2 + &
-               (j - field0%ny / 2.0 + 1)**2
+          ds2 = (i - field0%nx / 2.0_dp + 1)**2 + &
+               (j - field0%ny / 2.0_dp + 1)**2
           if (ds2 < radius2) then
              field0%data(i,j) = 5.0_dp
           else
@@ -131,6 +131,7 @@ contains
   !   to_field (type(field)): variable to copy to
   subroutine copy_fields(from_field, to_field)
     implicit none
+
     type(field), intent(in) :: from_field
     type(field), intent(out) :: to_field
 
@@ -231,13 +232,13 @@ contains
     ! (without ghost layers) so we need array for that
     integer :: nx, ny, stat
     real(kind=dp), pointer, contiguous :: cdata(:,:)
-    
+
     cdata => curr % data
     ! Update current data from device
     !$acc update host(cdata)
 
-    nx = curr%nx
-    ny = curr%ny
+    nx = curr % nx
+    ny = curr % ny
 
     write(filename,'(A5,I5.5,A4,A)')  'heat_', iter, '.png'
     stat = save_png(cdata(1:nx,1:ny), nx, ny, &

@@ -5,6 +5,9 @@
 
 module heat
   use ISO_FORTRAN_ENV, only : real32, real64
+#ifdef _OPENACC
+  use openacc
+#endif
   implicit none
 
   integer, parameter :: dp = real64
@@ -83,13 +86,14 @@ contains
   !   curr, prev (type(field)): the two variables that are swapped
   subroutine swap_fields(curr, prev)
     implicit none
+
     type(field), intent(inout) :: curr, prev
     real(kind=dp), pointer, contiguous, dimension(:,:) :: tmp
     
     tmp => prev%data
     prev%data => curr%data
     curr%data => tmp
-end subroutine swap_fields
+  end subroutine swap_fields
 
   ! Copy the data from one field to another
   ! Arguments:
@@ -97,6 +101,7 @@ end subroutine swap_fields
   !   to_field (type(field)): variable to copy to
   subroutine copy_fields(from_field, to_field)
     implicit none
+
     type(field), intent(in) :: from_field
     type(field), intent(out) :: to_field
 
@@ -196,19 +201,17 @@ end subroutine swap_fields
 
     ! The actual write routine takes only the actual data
     ! (without ghost layers) so we need array for that
-    integer :: full_nx, full_ny, stat
-    real(kind=dp), dimension(:,:), allocatable, target :: full_data
+    integer :: nx, ny, stat
+    real(kind=dp), pointer, contiguous :: cdata(:,:)
 
-    full_nx = curr%nx
-    full_ny = curr%ny
+    cdata => curr % data
 
-    allocate(full_data(full_nx, full_ny))
-    full_data(1:curr%nx, 1:curr%ny) = curr%data(1:curr%nx, 1:curr%ny)
+    nx = curr % nx
+    ny = curr % ny
 
     write(filename,'(A5,I5.5,A4,A)')  'heat_', iter, '.png'
-    stat = save_png(full_data, full_nx, full_ny, &
+    stat = save_png(cdata(1:nx,1:ny), nx, ny, &
          & trim(filename) // C_NULL_CHAR, 'F')
-    deallocate(full_data)
   end subroutine output
 
   ! Clean up routine for field type
