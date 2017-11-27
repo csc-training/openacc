@@ -73,40 +73,31 @@ OpenACC compilation can be enabled with option `-acc`. Note that without this fl
 
 ### Running on local desktop computers
 
-Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI compiler installations. The PGI compiler is not in the PATH by default, but you can initialize the environment using command `source ~/pgi/pgi17.10`.
+Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI compiler installations. The PGI compiler is not in the PATH by default, but you can initialize the environment using command `source ~/pgi/pgi_activate`.
 
 ### Running on Taito-GPU
 
 You can log into [Taito-GPU](https://research.csc.fi/taito-gpu) front-end node using ssh command `ssh -Y trngXXX@taito-gpu.csc.fi` where `XXX` is the number of your training account. You can also use your own CSC account if you have one.
 
-Before compiling the exercises you haveto load the correct environment module `openacc-env/16.7` as well as reload the git module to access this repository
+Before compiling the exercises you have to load the correct environment module `pgi/17.10` as well as reload the git module to access this repository
 
 ```shell
-module load openacc-env/16.7
+module load pgi/17.10
 module load git
 ```
 
 Serial jobs can be run interactively with srun command, for example
 
 ```shell
-srun -n1 -pgpu --gres=gpu:1 -Ck80 ./my_program
-```
-
-Multi-GPU jobs require a slightly different set of options, for example a MPI
-job that uses eight GPUs on two nodes and launch a single MPI task per GPU can be run with command
-
-```shell
-srun -n8 --ntasks-per-socket=2 -N2 --gres=gpu:4 -Ck80 ./my_program
+srun -n1 -pgpu --gres=gpu:k40:1 ./my_program
 ```
 
 #### Reservation
 
-This course has a resource reservation that can be used for the exercises. You
-can run your job within the reservation with `--reservation` flag, such as
+This course has a resource reservation that can be used for the exercises. You can run your job within the reservation with `--reservation` flag, such as
 
 ```shell
-srun --reservation=acc_course_wed -n1 -pgpu --gres=gpu:1 ./my_program
+srun --reservation=openacc_mon -n1 -pgpu --gres=gpu:k40:1 ./my_program
 ```
 
-Names of the reservations for Monday and Tuesday are
-`acc_course_mon` and `acc_course_tue` respectively.
+Names of the reservations for Monday and Tuesday are `openacc_mon` and `openacc_tue` respectively.
