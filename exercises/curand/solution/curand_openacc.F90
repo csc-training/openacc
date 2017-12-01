@@ -38,7 +38,6 @@ contains
     ! TODO: Add here the initialization call as instructed in the README.md
     !       Create appropriate data region and generate the random numbers using
     !      curand call. Add correct pragmas for the computation loop.
-
     istat = curandCreateGenerator(g, CURAND_RNG_PSEUDO_DEFAULT)
 
     !$acc data create(x(1:n), y(1:n)) copy(inside) copyin(n)
@@ -47,13 +46,12 @@ contains
     istat = curandGenerateUniform(g, y, n)
     !$acc end host_data
     
-    !$acc parallel loop
+    !$acc parallel loop reduction(+:inside)
     do i = 1, n
        if (x(i)**2 + y(i)**2 < 1.0_sp) then
           inside = inside + 1
        end if
     end do
-    
     !$acc end data
 
     ! TODO: Free the random number generator

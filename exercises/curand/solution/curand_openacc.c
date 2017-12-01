@@ -51,14 +51,32 @@ float gpu_pi(int n)
      *       uniformly distributed random number as instructed in the README.md,
      *       compute the loop using openacc and release the random number generator.
      */
-        
-    for (i = 0; i < n; i++) {
-        if (x[i]*x[i] + y[i]*y[i] < 1.0) {
-        inside++;
-    }
+    istat = curandCreateGenerator(&g, CURAND_RNG_PSEUDO_DEFAULT);
 
+    #pragma acc data create(x[0:n], y[0:n])
+    {
+        #pragma acc host_data use_device(x, y) 
+        {
+            istat = curandGenerateUniform(g, x, n);
+            if (istat != CURAND_STATUS_SUCCESS) printf("Error in curandGenerate: %d\n", istat);
+            istat = curandGenerateUniform(g, y, n);
+            if (istat != CURAND_STATUS_SUCCESS) printf("Error in curandGenerate: %d\n", istat);      
+        
+            #pragma acc parallel loop reduction(+:inside)
+            for (i = 0; i < n; i++) {
+                if (x[i]*x[i] + y[i]*y[i] < 1.0) {
+                    inside++;
+                }
+            }
+        }
+    }
     free(x);
     free(y);
+
+    istat = curandDestroyGenerator(g);
+    if (istat != CURAND_STATUS_SUCCESS) {
+        fprintf(stderr, "Error in curandDestroyGenerator: %d\n", istat);
+    }
 
     pi = 4.0 * (float)inside / (float)n;
 
@@ -68,7 +86,6 @@ float gpu_pi(int n)
 
 int main(int argc, char *argv[])
 {
-    curandGenerator_t randgen;
     int nsamples;
     float *x, *y, pi;
     int i, inside, outside;
