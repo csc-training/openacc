@@ -7,7 +7,7 @@
 1. [Schedule](#schedule)
 1. [Material](#lecture-material)
 1. [Instructions for running OpenACC exercises](#instructions-for-running-openacc-exercises)
-1. [Exercises](#exercises)
+1. [Exercises](https://github.com/csc-training/openacc/tree/master/exercises)
 
 ## Schedule
 
