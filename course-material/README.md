@@ -38,7 +38,7 @@
 The [slides](https://events.prace-ri.eu/event/670/material/slides/) for the lectures of this course can be downloaded from the course [homepage](https://events.prace-ri.eu/event/670/) on the PRACE website.
 
 Other external material
-
+- [OpenACC 2.6 quick reference] (https://www.openacc.org/sites/default/files/inline-files/OpenACC%20API%202.6%20Reference%20Guide.pdf)
 - [openacc.org](http://www.openacc.org)
 - [openacc 2.5 specifications](http://www.openacc.org/sites/default/files/OpenACC_2pt5.pdf)
 - [NVIDIA Accelerated Commputing](https://developer.nvidia.com/accelerated-computing)
