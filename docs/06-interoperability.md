@@ -70,9 +70,9 @@ b
     - CUDA-kernels must be called with help of OpenACC `host_data`
 - Interface function in CUDA-file must have `extern "C" void func(...)`
 - The CUDA-codes are compiled with NVIDIA `nvcc` compiler, e.g.
-  `nvcc -c -O4 --restrict -arch=sm_35 daxpy_cuda.cu`
+  `nvcc -c -O3 --restrict -arch=sm_35 daxpy_cuda.cu`
 - The OpenACC-codes are compiled with PGI-compiler e.g.
-  `pgcc -c -acc -O4 call_cuda_from_openacc.c`
+  `pgcc -c -acc -O3 call_cuda_from_openacc.c`
 - Linking with PGI-compiler must also have `-acc -Mcuda` e.g.
   `pgcc -acc -Mcuda call_cuda_from_openacc.o daxpy_cuda.o`
 
@@ -138,9 +138,9 @@ extern "C" void daxpy(int n, double a,
     - Interface to these functions must have `extern "C" void func(...)`
 - OpenACC routines must relate to CUDA-arrays via `deviceptr`
 - The CUDA-codes are still compiled with `nvcc` compiler, e.g.
-  `nvcc -c -O4 --restrict -arch=sm_35 call_openacc_from_cuda.cu`
+  `nvcc -c -O3 --restrict -arch=sm_35 call_openacc_from_cuda.cu`
 - The OpenACC-codes are compiled again with PGI-compiler e.g.
-  `pgcc -c -acc -O4 daxpy_openacc.c`
+  `pgcc -c -acc -O3 daxpy_openacc.c`
 - Linking must still be done with PGI using `-acc -Mcuda` e.g.
   `pgcc -acc -Mcuda call_openacc_from_cuda.o daxpy_openacc.o`
 
