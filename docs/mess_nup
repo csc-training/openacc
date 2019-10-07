@@ -1,0 +1,116 @@
+#!/bin/bash
+
+#set -xv
+
+cover=
+handout=/dev/null
+outfile=/dev/null
+schedule=/dev/null
+exercises=
+
+FLAGS=c:h:o:s:x:-
+
+while getopts ${FLAGS} i
+do
+  case $i in
+      c) cover="$OPTARG" ;;
+      h) handout="$OPTARG" ;;
+      o) outfile="$OPTARG" ;;
+      s) schedule="$OPTARG" ;;
+      x) exercises="$OPTARG" ;;
+      -) break;;
+  esac
+done
+
+shift $(expr $OPTIND - 1)
+
+input=${*:-}
+
+# This is the list of lecture files to process
+#lecture_pdfs="1_Introduction.pdf 2_ProceduresModules.pdf 3_Arrays.pdf 4_MoreArrays.pdf 5_IO.pdf 6_Types.pdf 7_UsefulFeatures.pdf 8_OutlookF08.pdf"
+lecture_pdfs="$input"
+
+#cover_pdf="0_Title.pdf"
+cover_pdf="$cover"
+
+#exercises_pdf="9_Exercises.pdf"
+exercises_pdf="$exercises"
+
+#out_filename="Fortran9503_press.pdf"
+out_filename="$outfile"
+
+#handout="Fortran9503_handout.pdf"
+
+#schedule="Fortran9503_schedule_and_exercises.pdf"
+
+lecture_nup_options="--delta '0.05cm 0.5cm' --nup 2x2 --landscape --a4paper --scale 0.95"
+
+# Page numbering LaTeX preamble, "SKIP_PAGES" is a place holder for page counter
+PNUM_PREAMBLE="\\usepackage{helvet} \\usepackage{fancyhdr} \\addtocounter{page}{SKIP_PAGES} \\renewcommand{\\familydefault}{\\sfdefault} \\fancyhf{} \\fancyhf[FER,FOR]{\\Large\\thepage} \\footskip 3.5cm \\fancyhfoffset{8cm} \\renewcommand{\\headrulewidth}{0pt}"
+
+filestring=""
+SKIP_PAGES=0
+
+pnumfiles=""
+nupfiles=""
+
+for fname in ${lecture_pdfs}; do
+    # Temporary file names
+    pnumtmp=$(basename ${fname} .pdf)_pagenum_tmp.pdf
+    nuptmp=$(basename ${fname} .pdf)_nup_tmp.pdf
+    
+    pnumfiles="${pnumfiles} ${pnumtmp}"
+    nupfiles="${nupfiles} ${nuptmp}"
+
+    # Generate pages with page numbers
+    pdfjam ${fname} --landscape --a4paper \
+        --preamble "$(echo $PNUM_PREAMBLE | sed -e "s/SKIP_PAGES/$SKIP_PAGES/")"\
+        --pagecommand '\thispagestyle{fancyplain}' --outfile ${pnumtmp}
+
+    # Update page counter for next lecture
+    pagecount=$(pdfinfo ${pnumtmp} | grep Pages | cut -c8- | tr -d ' ')
+    ((SKIP_PAGES += pagecount))
+
+    # Generate the n-up file (why do I have to use eval here?)
+    eval pdfjam ${pnumtmp} ${lecture_nup_options} --outfile ${nuptmp}
+done
+
+# Join the cover + exercises (A4-portrait) into schedule pdf
+lecture_join_options="--a4paper --no-landscape"
+pdfjam ${cover_pdf} ${exercises_pdf} ${lecture_join_options} --outfile $schedule
+
+# Join the lectures into a single handout pdf (lectures only)
+lecture_join_options="--a4paper --landscape"
+pdfjam ${nupfiles} ${lecture_join_options} --outfile $handout
+
+# Join the lectures into a single pdf
+lecture_join_options="--a4paper --angle 90"
+pdfjam ${nupfiles} ${lecture_join_options} --outfile Lectures_tmp.pdf
+
+# Remove the temporary files of each lecture
+\rm -f ${pnumfiles} ${nupfiles}
+
+# Join the cover pdf with lectures first. Make sure that the lectures
+# start from the right side
+nof_pages=$(pdfinfo ${cover_pdf} | grep Pages | cut -c8- | tr -d ' ')
+if (( (nof_pages % 2) == 1 )); then
+    filestring="${cover_pdf} 1-,{} Lectures_tmp.pdf"
+else
+    filestring="${cover_pdf} Lectures_tmp.pdf"
+fi
+tmpfile=Lectures_tmpfile.pdf
+pdfjam ${filestring} --outfile ${tmpfile}
+
+# Join the cover pdf, lectures and exercises. Make sure that the exercises
+# start from the right side
+nof_pages=$(pdfinfo ${tmpfile} | grep Pages | cut -c8- | tr -d ' ')
+if (( (nof_pages % 2) == 1 )); then
+    filestring="${tmpfile} 1-,{} ${exercises_pdf}"
+else
+    filestring="${tmpfile} ${exercises_pdf}"
+fi
+pdfjam ${filestring} --outfile ${out_filename}
+
+# Remove the lectures temp file
+\rm -f Lectures_tmp.pdf ${tmpfile}
+
