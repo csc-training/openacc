@@ -1,7 +1,7 @@
 ---
 title:  "OpenACC: advanced topics"
-author: CSC Summerschool
-date:   2019-07
+author: CSC - IT Center for Science
+date:   2019-10
 lang:   en
 ---
 
