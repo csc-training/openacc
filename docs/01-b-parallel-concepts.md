@@ -59,7 +59,7 @@
 - Parallel programs often contain sequential parts
 - *Amdahl's law* gives the maximum speed-up in the presence of
   non-parallelizable parts
-- Main reason for limited strong scaling
+- Main reason for limited scaling
 -  Maximum speed-up is
 <small>
 $$

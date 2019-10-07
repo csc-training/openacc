@@ -279,8 +279,7 @@ for (int i=0; i<n; ++i) {
 }
 ```
 <small>
-Example from
-<https://devblogs.nvidia.com/parallelforall/7-powerful-new-features-openacc-2-0/>
+Example from Nvida devblog: <https://bit.ly/2Vl4weF/>
 </small>
 </div>
 
