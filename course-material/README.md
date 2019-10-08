@@ -1,6 +1,6 @@
 # GPU Programming with OpenACC
 
-4-5 December, 2017, at CSC - IT Center for Science.
+14-15 October, 2019, at CSC - IT Center for Science.
 
 ## Table of content
 
@@ -35,19 +35,19 @@
 
 ## Lecture material
 
-The [slides](https://events.prace-ri.eu/event/670/material/slides/) for the lectures of this course can be downloaded from the course [homepage](https://events.prace-ri.eu/event/670/) on the PRACE website.
+The [slides](https://a3s.fi/alfthan-test/openacc-2019.pdf) for the lectures of this course can be downloaded from the course [homepage](https://www.csc.fi/web/training/-/gpu-openacc-2019) on the PRACE website. The markdown versions are also available in this repository at [docs](/docs)
 
 Other external material
 - [OpenACC 2.6 quick reference](https://www.openacc.org/sites/default/files/inline-files/OpenACC%20API%202.6%20Reference%20Guide.pdf)
 - [openacc.org](http://www.openacc.org)
-- [openacc 2.5 specifications](http://www.openacc.org/sites/default/files/OpenACC_2pt5.pdf)
+- [openacc 2.7 specifications](https://www.openacc.org/sites/default/files/inline-files/OpenACC.2.7.pdf)
 - [NVIDIA Accelerated Commputing](https://developer.nvidia.com/accelerated-computing)
 - [NVIDIA OpenACC resources](https://developer.nvidia.com/openacc)
 - [PGI compiler suite](http://www.pgroup.com/) Free of charge OpenACC compiler (community edition)
 
 ## Instructions for running OpenACC exercises
 
-All exercises can be done using the local classroom workstations. You may also use the [Taito-GPU](https://research.csc.fi/taito-gpu) partition of Taito cluster.
+All exercises can be done using the local classroom workstations. You may also use the [Puhti-AI](https://docs.csc.fi) partition of Puhti cluster.
 
 ### Downloading the exercises
 
