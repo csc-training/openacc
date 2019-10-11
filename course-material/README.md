@@ -71,25 +71,23 @@ PGI compiler commands  are
 
 OpenACC compilation can be enabled with option `-acc`. Note that without this flag, a non-accelerated version will be compiled. In addition to the acc flag, you have to specify the type of the accelerator with `-ta=nvidia,kepler` flag. If you run these exercises on some other system, you have to modify the type of the accelerator accordingly. You can check the type of the acclerator and recommended flags with command `pgaccelinfo`. If you want to get detailed information on OpenACC code generation, you can use option `-Minfo=accel`.
 
-### Running on local desktop computers
+### Running on Puhti
 
-Classroom workstations have Quadro K600 GPUs and both CUDA SDK and PGI compiler installations. The PGI compiler is not in the PATH by default, but you can initialize the environment using command `source ~/pgi/pgi_activate`.
+You can log into [Puhti](https://docs.csc.fi/#computing/overview/) front-end node using ssh command `ssh -Y trngXXX@puhti.csc.fi` where `XXX` is the number of your training account. You can also use your own CSC account if you have one.
 
-### Running on Taito-GPU
-
-You can log into [Taito-GPU](https://research.csc.fi/taito-gpu) front-end node using ssh command `ssh -Y trngXXX@taito-gpu.csc.fi` where `XXX` is the number of your training account. You can also use your own CSC account if you have one.
-
-Before compiling the exercises you have to load the correct environment module `pgi/17.10` as well as reload the git module to access this repository
+Before compiling the exercises you have to load the correct environment module `pgi` as well as reload the git module to access this repository
 
 ```shell
-module load pgi/17.10
+module purge
+module load pgi
+module load cuda
 module load git
 ```
 
 Serial jobs can be run interactively with srun command, for example
 
 ```shell
-srun -n1 -pgpu --gres=gpu:k40:1 ./my_program
+srun -n1 -p gpu --gres=gpu:v100:1 --account=YYY ./my_program
 ```
 
 #### Reservation
@@ -97,7 +95,7 @@ srun -n1 -pgpu --gres=gpu:k40:1 ./my_program
 This course has a resource reservation that can be used for the exercises. You can run your job within the reservation with `--reservation` flag, such as
 
 ```shell
-srun --reservation=openacc_mon -n1 -pgpu --gres=gpu:k40:1 ./my_program
+srun --reservation=openACC_course_mon -n1 -p gpu --gres=gpu:v100:1 --account=YYY ./my_program
 ```
 
-Names of the reservations for Monday and Tuesday are `openacc_mon` and `openacc_tue` respectively.
+Names of the reservations for Monday and Tuesday are `openACC_course_mon` and `openACC_course_tue` respectively.
