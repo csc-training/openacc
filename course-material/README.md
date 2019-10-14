@@ -73,7 +73,7 @@ OpenACC compilation can be enabled with option `-acc`. Note that without this fl
 
 ### Running on Puhti
 
-You can log into [Puhti](https://docs.csc.fi/#computing/overview/) front-end node using ssh command `ssh -Y trngXXX@puhti.csc.fi` where `XXX` is the number of your training account. You can also use your own CSC account if you have one.
+You can log into [Puhti](https://docs.csc.fi/#computing/overview/) front-end node using ssh command `ssh -Y trainingXXX@puhti.csc.fi` where `XXX` is the number of your training account. You can also use your own CSC account if you have one.
 
 Before compiling the exercises you have to load the correct environment module `pgi` as well as reload the git module to access this repository
 
