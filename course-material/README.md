@@ -87,8 +87,15 @@ module load git
 Serial jobs can be run interactively with srun command, for example
 
 ```shell
-srun -n1 -p gpu --gres=gpu:v100:1 --account=YYY ./my_program
+srun -n1 -p gpu -t 00:05:00 --gres=gpu:v100:1 --account=YYY ./my_program
 ```
+
+If the normal GPU nodes are all occupied, it can also make sense to run in the GPU test partition 
+
+```shell
+srun -n1 -p gputest -t 00:05:00 --gres=gpu:v100:1 --account=YYY ./my_program
+```
+
 
 #### Reservation
 
