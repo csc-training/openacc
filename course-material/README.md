@@ -96,6 +96,10 @@ If the normal GPU nodes are all occupied, it can also make sense to run in the G
 srun -n1 -p gputest -t 00:05:00 --gres=gpu:v100:1 --account=YYY ./my_program
 ```
 
+If you are using CSC training accounts you should use the following project as your account:
+`--account=project_2000745`.
+
+
 
 #### Reservation
 
