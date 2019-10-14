@@ -39,13 +39,13 @@
 # Parallel scaling
 <div class="column">
 - Strong parallel scaling
-   - Constant problem size
-   - Execution time decreases in proportion to the increase in the number
-     of cores
+    - Constant problem size
+    - Execution time decreases in proportion to the increase in the number
+      of cores
 - Weak parallel scaling
-   - Increasing problem size
-   - Execution time remains constant when number of cores increases in
-     proportion to the problem size
+    - Increasing problem size
+    - Execution time remains constant when number of cores increases in
+      proportion to the problem size
 
 </div>
 <div class="column">
@@ -58,7 +58,7 @@
 <div class="column">
 - Parallel programs often contain sequential parts
 - *Amdahl's law* gives the maximum speed-up in the presence of
-  non-parallelizable parts
+   non-parallelizable parts
 - Main reason for limited scaling
 -  Maximum speed-up is
 <small>
