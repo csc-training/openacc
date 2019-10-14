@@ -116,7 +116,7 @@ Names of the reservations for Monday and Tuesday are `openACC_course_mon` and `o
 The visual profiler is a GUI program which means we need to get the X session out of the compute nodes. The way this is done now is to first allocate a GPU for your use, then start an ssh session into the node you allocated. Once logged into the node you need to reload the modules and then you can run the visual profiler `nvvp`
 
 ```shell
-salloc -N1 -n 1 --account=YYY -p gput --gres=gpu:v100:1  --reservation=openACC_course_tue
+salloc -N1 -n 1 --account=YYY -p gpu --gres=gpu:v100:1  --reservation=openACC_course_tue
 ssh -X $(srun hostname) 
 module load pgi cuda
 nvvp
