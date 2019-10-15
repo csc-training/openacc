@@ -45,7 +45,7 @@ The lecture material of the course is available in this repository at [docs](/do
 * [OpenACC data management](https://a3s.fi/openacc-10-2019/03-OpenACC-data.pdf)
 * [Profiling and performance optimization](https://a3s.fi/openacc-10-2019/04-Profiling-GPUs.pdf)
 * [Advanced topics 1/2](https://a3s.fi/openacc-10-2019/05-async-routine.pdf)
-* [Advanced topics 2/2](https://a3s.fi/06-interoperability.pdf)
+* [Advanced topics 2/2](https://a3s.fi/openacc-10-2019/06-interoperability.pdf)
 * The full set of [slides](https://a3s.fi/openacc-10-2019/openacc-2019.pdf)
     
     
