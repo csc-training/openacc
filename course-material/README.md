@@ -2,6 +2,9 @@
 
 14-15 October, 2019, at CSC - IT Center for Science.
 
+Course [homepage](https://www.csc.fi/web/training/-/gpu-openacc-2019) on the PRACE website. 
+
+
 ## Table of content
 
 1. [Schedule](#schedule)
@@ -35,8 +38,17 @@
 
 ## Lecture material
 
-The [slides](https://a3s.fi/alfthan-test/openacc-2019.pdf) for the lectures of this course can be downloaded from the course [homepage](https://www.csc.fi/web/training/-/gpu-openacc-2019) on the PRACE website. The markdown versions are also available in this repository at [docs](/docs)
-
+The lecture material of the course is available in this repository at [docs](/docs). There are also pre-compiled pdf versions available:
+* [Introduction to accelerators 1/2](https://a3s.fi/openacc-10-2019/01-a-GPU-intro.pdf)
+* [Introduction to accelerators 2/2](https://a3s.fi/openacc-10-2019/01-b-parallel concepts.pdf)
+* [Introduction to OpenACC](https://a3s.fi/openacc-10-2019/02-OpenACC-intro.pdf)
+* [OpenACC data management](https://a3s.fi/openacc-10-2019/03-OpenACC-data.pdf)
+* [Profiling and performance optimization](https://a3s.fi/openacc-10-2019/04-Profiling-GPUs.pdf)
+* [Advanced topics 1/2](https://a3s.fi/openacc-10-2019/05-async-routine.pdf)
+* [Advanced topics 2/2](https://a3s.fi/06-interoperability.pdf)
+* The full set of [slides](https://a3s.fi/openacc-10-2019/openacc-2019.pdf)
+    
+    
 Other external material
 - [OpenACC 2.6 quick reference](https://www.openacc.org/sites/default/files/inline-files/OpenACC%20API%202.6%20Reference%20Guide.pdf)
 - [openacc.org](http://www.openacc.org)
