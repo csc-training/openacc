@@ -16,7 +16,7 @@ and in C
 ```C
 curandGenerator g;
 int istat;
-istat = curandCreateGenerator(&g, CURAND_PSEUDO_DEFAULT);
+istat = curandCreateGenerator(&g, CURAND_RNG_PSEUDO_DEFAULT);
 ...
 istat = curandDestroyGenerator(g);
 ```
