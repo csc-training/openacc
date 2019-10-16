@@ -111,6 +111,10 @@ srun -n1 -p gputest -t 00:05:00 --gres=gpu:v100:1 --account=YYY ./my_program
 If you are using CSC training accounts you should use the following project as your account:
 `--account=project_2000745`.
 
+If you are participating in the follow-up GPU hackathon you can also use this one:
+`--account=project_2001889`
+
+To see what scratch disk space you have available, please run `csc-workspaces`. Using `project_2001889` scratch space you can also share data.
 
 
 #### Reservation
