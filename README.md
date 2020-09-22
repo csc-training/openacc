@@ -1,16 +1,13 @@
 # GPU programming with OpenACC
 
 This repository containes the exercises and other course material used in
-CSC's *GPU Programming with OpenACC* courses.
-
-The exercises and instructions for running them are described in this
-[document](course-material/README.md)
+CSC's *GPU Programming with OpenACC* courses. The exercises and instructions
+for running them are described in this [document](course-material/README.md)
 
 The editions of this course are described below:
 
 * GPU Programming with OpenACC - October 2020
   * Under preparation
-  * [Course home page](...)
 
 * GPU Programming with OpenACC - October 2019
   * [Repository revision](https://github.com/csc-training/openacc/tree/2019-10) used in course. It is tagged with 2019-10
