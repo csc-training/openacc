@@ -1,4 +1,4 @@
-program ex4_data
+program jacobi
 #ifdef _OPENACC
   use openacc
 #endif
@@ -45,7 +45,7 @@ program ex4_data
   allocate(u(0:nx+1,0:ny+1))
   allocate(unew(0:nx+1,0:ny+1))
 
-  ! TODO: Initialize data region on device
+  !$acc data create(u,unew)
 
   call init(u)
   call init(unew)
@@ -63,6 +63,8 @@ program ex4_data
      endif
   enddo
 
+  !$acc end data
+
   deallocate(u,unew)
 
   mlups = real(iter,sp) * real(nx,sp) * real(ny,sp) * real(1.0e-6, sp)
@@ -76,16 +78,17 @@ contains
     implicit none
     real(kind=sp), intent(out) :: new(0:nx+1,0:ny+1)
     integer i,j
-    ! TODO: Implement data initialization with OpenACC on device
+
+    !$acc parallel loop private(i,j) present(new)
     do j = 0, ny+1
        do i = 0, nx+1
           new(i,j) = 0.0_sp
        enddo
     enddo
-    ! TODO: Implement data initialization with OpenACC on device 
+    !$acc kernels present(new)
     new(:,ny+1) = 1.0_sp
-    ! TODO: Implement data initialization with OpenACC on device 
     new(nx+1,:) = 1.0_sp
+    !$acc end kernels
   end subroutine init
 
   subroutine update(new, old, norm)
@@ -98,7 +101,7 @@ contains
 
     if (present(norm)) then
        norm = 0.0_sp
-       ! TODO: Implement computation with OpenACC on device
+       !$acc parallel loop reduction(max:norm) private(i,j) present(new,old) collapse(2)
        do j = 1, ny
           do i = 1, nx
              new(i,j) = factor*(old(i-1,j) + old(i+1,j) + old(i,j-1) + old(i,j+1))
@@ -106,7 +109,7 @@ contains
           enddo
        enddo
     else
-       ! TODO: Implement computation with OpenACC on device
+       !$acc parallel loop private(i,j) present(new,old) collapse(2)
        do j = 1, ny
           do i = 1, nx
              new(i,j) = factor*(old(i-1,j) + old(i+1,j) + old(i,j-1) + old(i,j+1))
@@ -124,4 +127,4 @@ contains
     ftimer = real(t,kind(ftimer))/real(rate,kind(ftimer))
   end function ftimer
 
-end program ex4_data
+end program jacobi
