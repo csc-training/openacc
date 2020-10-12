@@ -1,7 +1,7 @@
 ---
-title:  OpenACC data management
+title:  "OpenACC: data management"
 author: CSC - IT Center for Science
-date:   2019-10
+date:   2020-10
 lang:   en
 ---
 
@@ -15,20 +15,21 @@ lang:   en
     - transferring data to/from the device
 - All variables used inside the `parallel` or `kernels` region will be
   treated as *implicit* variables if they are not present in any data
-  clauses, i.e., copying to and from to the device is automatically
+  clauses, i.e. copying to and from to the device is automatically
   performed
 
 
 # Motivation for optimizing data movement
 
-- When dealing with an accelerator GPU device attached to a PCIe bus,  **optimizing data movement** is often **essential** to achieving  good performance
-- The four key steps in porting to high performance accelerated code
+- When dealing with an accelerator / GPU device attached to a PCIe bus,
+  **optimizing data movement** is often **essential** to achieving good
+  performance
+- The four key steps in porting to high performance accelerated code:
     1. Identify parallelism
     2. Express parallelism
     3. Express data movement
     4. Optimise loop performance
-    5. Go to 1!
-
+    5. Go back to 1!
 
 
 # Data lifetimes
@@ -48,8 +49,8 @@ lang:   en
     - C/C++: `#pragma acc data [clauses]`
     - Fortran: `!$acc data [clauses]`
 - Data transfers take place
-    - from **the host** to **the device** upon entry to the region
-    - from **the device** to **the host** upon exit from the region
+    - from the **host** to the **device** upon entry to the region
+    - from the **device** to the **host** upon exit from the region
 - Functionality defined by *data clauses*
 - *Data clauses* can also be used in `kernels` and `parallel` constructs
 
@@ -102,8 +103,10 @@ end do
 `present(var-list)`
   : `-`{.ghost}
 
-- **on entry/exit:** assume that memory is allocated and that data  is present on the device
+- **on entry/exit:** assume that memory is allocated and that data is present
+  on the device
 </div>
+
 <div class="column">
 `create(var-list)`
   : `-`{.ghost}
@@ -112,8 +115,8 @@ end do
     present
 - **on exit:** deallocate memory on the device, if it was allocated
     on entry
-- In depth: *structured* reference count decremented, and deallocation happens if it goes to zero
-
+    - in-depth: *structured* reference count decremented, and deallocation
+      happens if both reference counts (*structured* and *dynamic*) are zero
 </div>
 
 # Data constructs: data clauses
@@ -121,7 +124,7 @@ end do
 `copy(var-list)`
   : `-`{.ghost}
 
-- **on entry:** If data is present on the device on entry, behave as
+- **on entry:** if data is present on the device on entry, behave as
     with the `present` clause, otherwise allocate memory on the device
     and copy data from the host to the device.
 - **on exit:** copy data from the device to the host and deallocate
@@ -136,7 +139,7 @@ end do
   : `-`{.ghost}
 
 - **on entry:** same as `copy` on entry
-- **on exit:** deallocate memory on the device of it was allocated
+- **on exit:** deallocate memory on the device if it was allocated
     on entry
 </div>
 <div class="column">
@@ -144,7 +147,7 @@ end do
 `copyout(var-list)`
   : `-`{.ghost}
 
-- **on entry:** If data is present on the device on entry, behave as
+- **on entry:** if data is present on the device on entry, behave as
     with the `present` clause, otherwise allocate memory on the device
 - **on exit:** same as `copy` on exit
 </div>
@@ -157,41 +160,39 @@ end do
   : `-`{.ghost}
 
 - Performs reduction on the (scalar) variables in list
-- Private reduction variable is created for each gangs partial result
-- Private reduction variable is initialized to operators initial value
-- After parallel region the reduction operation is applied to private
-- variables and result is aggregated to the shared variable *and* the
-- aggregated result combined with the original value of the variable
+- Private reduction variable is created for each gang's partial result
+    - initialised to operators initial value
+- After parallel region the reduction operation is applied to the private
+  variables and the result is aggregated to the shared variable *and* the
+  aggregated result is combined with the original value of the variable
 
 
 # Reduction operators in C/C++ and Fortran
 
-
 | Arithmetic Operator | Initial value |
-|----------|---------------|
-| `+`      | `0`           |
-| `-`      | `0`           |
-| `*`      | `1`           |
-| `max`    | least         |
-| `min`    | largest       |
+|---------------------|---------------|
+| `+`                 | `0`           |
+| `-`                 | `0`           |
+| `*`                 | `1`           |
+| `max`               | least         |
+| `min`               | largest       |
+
 
 # Reduction operators in C/C++ only
+
 <div class="column">
-
 | Logical Operator | Initial value |
-|----------|---------------|
-| `&&`     | `1`           |
-| `||`     | `0`           |
-
-
+|------------------|---------------|
+| `&&`             | `1`           |
+| `||`             | `0`           |
 </div>
 
 <div class="column">
 | Bitwise Operator | Initial value |
-|----------|---------------|
-| `&`      | `~0`          |
-| `|`      | `0`           |
-| `^`      | `0`           |
+|------------------|---------------|
+| `&`              | `~0`          |
+| `|`              | `0`           |
+| `^`              | `0`           |
 </div>
 
 # Reduction operators in Fortran
@@ -222,14 +223,14 @@ end do
     - C/C++: `arr[start_index:length]`, for instance `vec[0:n]`
     - Fortran: `arr(start_index:end_index)`, for instance `vec(1:n)`
 - Note: array data **must** be *contiguous* in memory (vectors,
-      multidimensional arrays etc.)
+  multidimensional arrays etc.)
 
 
 # Default data environment in compute constructs
 
 - All variables used inside the `parallel` or `kernels` region will be
   treated as *implicit* variables if they are not present in any data
-  clauses, i.e., copying to and from to the device is automatically
+  clauses, i.e. copying to and from the device is automatically
   performed
 - Implicit *array* variables are treated as having the `copy` clause in
   both cases
@@ -262,6 +263,7 @@ int a[100], d[3][3], i, j;
 
 <div class="column">
 ## Fortran
+
 ```fortran
 integer a(0:99), d(3,3), i, j
 
@@ -287,7 +289,7 @@ integer a(0:99), d(3,3), i, j
 
 - Unstructured data regions enable one to handle cases where allocation
   and freeing is done in a different scope
-- Useful for, e.g., C++ classes, Fortran modules
+- Useful for e.g. C++ classes, Fortran modules
 - `enter data` defines the start of an unstructured data region
     - C/C++: `#pragma acc enter data [clauses]`
     - Fortran: `!$acc enter data [clauses]`
@@ -313,8 +315,8 @@ class Vector {
 };
 ```
 
-# Enter data clauses
 
+# Enter data clauses
 
 <div class=column>
 `if(condition)`
@@ -328,47 +330,44 @@ class Vector {
   : `-`{.ghost}
 
 - Allocate memory on the device
-
 </div>
+
 <div class=column>
 `copyin(var-list)`
   : `-`{.ghost}
 
 - Allocate memory on the device and copy data from the host to the
-    device
+  device
 </div>
 
+
 # Exit data clauses
+
 <div class=column>
 `if(condition)`
   : `-`{.ghost}
-  
+
 - Do nothing if condition is false
 
 <br>
 
 `delete(var-list)`
   : `-`{.ghost}
- 
+
 - Deallocate memory on the device
-- In depth: *dynamic* reference count decremented, and deallocation
-  happens if it goes to zero
-
+    - in-depth: *dynamic* reference count decremented, and deallocation
+      happens if both reference counts (*dynamic* and *structured*) are zero
 </div>
+
 <div class=column>
-
-
 `copyout(var-list)`
   : `-`{.ghost}
 
 - Deallocate memory on the device and copy data from the device to the
-    host
-- In depth: *dynamic* reference count decremented, and deallocation
-  happens if it goes to zero
-
+  host
+    - in-depth: *dynamic* reference count decremented, and deallocation
+      happens if both reference counts (*dynamic* and *structured*) are zero
 </div>
-
-
 
 
 # Data directive: update
@@ -400,6 +399,7 @@ class Vector {
 
 <div class="column">
 ## C/C++
+
 ```c
 float a[100];
 int iter;
@@ -412,7 +412,7 @@ int maxit=100;
         /* Computations on device */
         acc_compute(a);
         #pragma acc update self(a) \
-	            if(iter % 10 == 0)
+                if(iter % 10 == 0)
     }
 }
 ```
@@ -420,6 +420,7 @@ int maxit=100;
 
 <div class="column">
 ## Fortran
+
 ```fortran
 real :: a(100)
 integer :: iter
@@ -431,7 +432,7 @@ integer, parameter :: maxit = 100
     do iter=1,maxit
         ! Computations on device
         call acc_compute(a)
-        !$acc update self(a) 
+        !$acc update self(a)
         !$acc& if(mod(iter,10)==0)
     end do
 !$acc end data
@@ -489,6 +490,7 @@ void init_point() {
 - Performance depends on the memory access patterns
     - For some cases performance is comparable with explicitly tuned
       versions
+
 
 # Summary
 
