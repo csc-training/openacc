@@ -1,7 +1,7 @@
 ---
-title:  Introduction to OpenACC
+title:  "OpenACC: introduction"
 author: CSC - IT Center for Science
-date:   2019-10
+date:   2020-10
 lang:   en
 ---
 
@@ -17,13 +17,13 @@ lang:   en
   [http://www.openacc.org](http://www.openacc.org/)
 
 
-# OpenACC vs. CUDA
+# OpenACC vs. CUDA/HIP
 
-- Why OpenACC and not CUDA?
+- Why OpenACC and not CUDA/HIP?
     - Easier to work with
     - Porting of existing software requires less work
     - Same code can be compiled to CPU and GPU versions easily
-- Why CUDA and not OpenACC?
+- Why CUDA/HIP and not OpenACC?
     - Can access all features of the GPU hardware
     - More optimization possibilities
 
@@ -337,10 +337,33 @@ eval_point:
 ```
 
 
+# Example: `-Minfo`
+
+```bash
+$ pgcc -acc -Minfo=all doubleloops.c
+init:
+     38, Memory zero idiom, loop replaced by call to __c_mzero8
+     44, Memory set idiom, loop replaced by call to __c_mset8
+main:
+     74, Generating Tesla code
+         77, #pragma acc loop gang /* blockIdx.x */
+         79, #pragma acc loop vector(128) /* threadIdx.x */
+     74, Generating implicit copyin(u[:1024][:1024]) [if not already present]
+         Generating implicit copyout(unew[1:1022][1:1022]) [if not already present]
+     79, Loop is parallelizable
+     84, Generating Tesla code
+         87, #pragma acc loop gang /* blockIdx.x */
+         89, #pragma acc loop vector(128) /* threadIdx.x */
+     84, Generating implicit copyin(unew[:1024][:1024]) [if not already present]
+         Generating implicit copyout(u[1:1022][1:1022]) [if not already present]
+     89, Loop is parallelizable
+```
+
+
 # Summary
 
 - OpenACC is an directive-based extension to C/Fortran programming
   languages for accelerators
 - Supports separate memory on the accelerator
-- Compute constructs parallel and kernels
+- Compute constructs: parallel and kernels
 - Compiler diagnostics
