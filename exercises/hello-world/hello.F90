@@ -1,11 +1,11 @@
-program ex1_hello
+program hello
 #ifdef _OPENACC
   use openacc
 #endif
   implicit none
 #ifdef _OPENACC
   integer(acc_device_kind) :: devkind
-#endif   
+#endif
 
   write (*,*) 'Hello world from OpenACC'
 #ifdef _OPENACC
@@ -16,4 +16,4 @@ program ex1_hello
   write (*,*) 'Code compiled without OpenACC'
 #endif
 
-end program ex1_hello
+end program hello

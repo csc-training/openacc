@@ -4,10 +4,10 @@
 #endif
 
 int main(void) {
-#ifdef _OPENACC 
+#ifdef _OPENACC
   acc_device_t devtype;
 #endif
-  
+
   printf("Hello world from OpenACC\n");
 #ifdef _OPENACC
   devtype = acc_get_device_type();
