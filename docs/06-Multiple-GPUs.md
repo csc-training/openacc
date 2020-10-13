@@ -1,7 +1,7 @@
 ---
 title:  "OpenACC: multi-GPU programming"
 author: CSC - IT Center for Science
-date:   2019-10
+date:   2020-10
 lang:   en
 ---
 
@@ -9,18 +9,17 @@ lang:   en
 # Multi-GPU programming with OpenACC
 
 <div class=column>
-Three levels of hardware parallelism in a supercomputer
-
-1. GPU - different levels of threads
-2. Node - GPU, CPU and interconnect
-3. Machine - several nodes connected with interconnect
+- Three levels of hardware parallelism in a supercomputer:
+    1. GPU - different levels of threads
+    2. Node - multiple GPUs and CPUs
+    3. System - multiple nodes connected with interconnect
 </div>
-<div class=column>
-Three parallelization methods
 
-1. OpenACC
-2. OpenMP or MPI
-3. MPI between nodes
+<div class=column>
+- Three parallelization methods:
+    1. OpenACC
+    2. OpenMP or MPI
+    3. MPI between nodes
 </div>
 
 ![](img/gpu-cluster.png){.center}
@@ -29,16 +28,16 @@ Three parallelization methods
 # Multi-GPU communication cases
 
 - Single node multi-GPU programming
-    - All GPUs of a node are accessible from single process and its OpenMP
+    - All GPUs of a node are accessible from a single process and its OpenMP
       threads
     - Data copies either directly or through CPU memory
-- Multi node multi-GPU programming
-    - Communication between nodes requires message passing, MPI
-- In this lecture we will in detail only discuss parallelization with MPI
-    - This enables direct scalability from single to multi-node
+- Multi-node multi-GPU programming
+    - Communication between nodes requires message passing (MPI)
+- In this lecture we will discuss in detail only parallelization with MPI
+    - It enables direct scalability from single to multi-node
 
 
-# Selecting device
+# Multiple GPUs
 
 - OpenACC permits using multiple GPUs within one node by using the
   `acc_get_num_devices` and `acc_set_device_num` functions
@@ -47,12 +46,12 @@ Three parallelization methods
 - Issue when using MPI:
     - If a node has more than one GPU, all processes in the node can
       access all GPUs of the node
-    - MPI processes do not have a priori information on the other ranks in
-      the same node
+    - MPI processes do not have any a priori information about the other
+      ranks in the same node
     - Which GPU the MPI process should select?
 
 
-# Selecting the device in MPI
+# Selecting a device with MPI
 
 - Model is to use **one** MPI task per GPU
 - Launching job
@@ -62,12 +61,12 @@ Three parallelization methods
       two sockets (that nodes typically have)
     - Read the user guide of the system for details how to do this!
 - In the code a portable and robust solution is to use MPI3 shared memory
-    communicators to split the GPUs between processes
+  communicators to split the GPUs between processes
 - Note that you can also use OpenMP to utilize all cores in the node for
   computations on CPU side
 
 
-# Selecting the device in MPI
+# Selecting a device with MPI
 
 ```c
 MPI_Comm shared;
@@ -88,11 +87,11 @@ if (num_gpus == local_size) {
 
 - Idea: use MPI to transfer data between GPUs, use OpenACC-kernels for
   computations
-- Additional complexity: GPU memory is separate from that of a CPU
+- Additional complexity: GPU memory is separate from CPU memory
 - GPU-aware MPI-library
     - Can use the device pointer in MPI calls - no need for additional buffers
     - No need for extra buffers and device-host-device copies
-    - If enabled on system data will be transferred via transparent RDMA
+    - If enabled on system, data will be transferred via transparent RDMA
 - Without GPU-aware MPI-library
     - Data must be transferred from the device memory to the host memory and
       vice versa before performing MPI-calls
@@ -140,4 +139,5 @@ if (num_gpus == local_size) {
 
 - Typical HPC cluster node has several GPUs in each node
     - Selecting the GPUs with correct affinity
-    - Data transfers using MPI
+- Data transfers using MPI
+    - GPU-aware MPI avoids extra memory copies
