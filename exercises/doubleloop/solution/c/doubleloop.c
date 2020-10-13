@@ -31,7 +31,7 @@ void free_2d(double **array)
 }
 
 
-void init(double ** arr, int nx, int ny) 
+void init(double ** arr, int nx, int ny)
 {
     int i, j;
     for (i = 0; i < nx + 2; i++)
@@ -48,7 +48,7 @@ void init(double ** arr, int nx, int ny)
 
 int main(int argc, char **argv)
 {
-    double eps; 
+    double eps;
 
     double ** u, ** unew;
     const double factor = 0.25;
@@ -69,7 +69,6 @@ int main(int argc, char **argv)
 
     t_start = clock();
 
-    /* TODO: Parallelize this */
     for (iter = 0; iter < niter; iter++) {
 #pragma acc parallel
         {
@@ -77,7 +76,7 @@ int main(int argc, char **argv)
             for (i = 1; i < nx + 1; i++)
 #pragma acc loop
                 for (j = 1; j < ny + 1; j++) {
-                    unew[i][j] = factor * (u[i-1][j] + u[i+1][j] + 
+                    unew[i][j] = factor * (u[i-1][j] + u[i+1][j] +
                             u[i][j-1] + u[i][j+1]);
                 }
         }
@@ -87,7 +86,7 @@ int main(int argc, char **argv)
             for (i = 1; i < nx + 1; i++)
 #pragma acc loop
                 for (j = 1; j < ny + 1; j++) {
-                    u[i][j] = factor * (unew[i-1][j] + unew[i+1][j] + 
+                    u[i][j] = factor * (unew[i-1][j] + unew[i+1][j] +
                             unew[i][j-1] + unew[i][j+1]);
                 }
         }
@@ -96,8 +95,8 @@ int main(int argc, char **argv)
     /* Compute a reference sum, do not parallelize this! */
     sum = 0.0;
     for (i = 1; i < nx + 1; i++)
-        for (j = 1; j < ny + 1; j++) 
-            sum += u[i][j]; 
+        for (j = 1; j < ny + 1; j++)
+            sum += u[i][j];
 
     free_2d(u);
     free_2d(unew);
