@@ -54,9 +54,15 @@ lang:   en
 ![](img/peak-flop-development.png){.center}
 
 
-# Accelerators share of 500 fastest systems (Top500)
+# Accelerators share of 500 fastest systems (Top500) 2010 vs 2020
 
-![](img/accelerator-share.png){.center width=75%}
+<div class="column">
+![](img/accelerator_share_june_2010.png)
+</div>
+<div class="column">
+![](img/accelerator_share_june_2020.png)
+</div>
+
 
 
 # US roadmap to Exascale
