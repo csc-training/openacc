@@ -117,6 +117,7 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
           where the memory system bottleneck is. Check memory replay (coalescing) metrics to make sure you're
           efficiently utilizing the bytes transferred. Also consider whether it is possible to do more work per memory
           access (kernel fusion) or whether there are values you can (re)compute.
+```
 
 # Nsight Compute CLI (II)
 ```
