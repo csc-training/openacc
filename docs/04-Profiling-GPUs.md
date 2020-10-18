@@ -95,7 +95,7 @@ tpc__cycles_in_region       # of cycles in user-defined region
 ...
 ```
 
-# Nsight Compute (I)
+# Nsight Compute CLI (I)
 ```
 srun -n 1  nv-nsight-cu-cli ./jacobi
 ...
@@ -118,7 +118,7 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
           efficiently utilizing the bytes transferred. Also consider whether it is possible to do more work per memory
           access (kernel fusion) or whether there are values you can (re)compute.
 
-# Nsight Compute (II)
+# Nsight Compute CLI (II)
 ```
     Section: Launch Statistics
     ---------------------------------------------------------------------- --------------- ------------------------------
