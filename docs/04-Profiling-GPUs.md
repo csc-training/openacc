@@ -146,6 +146,7 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
     Achieved Active Warps Per SM                                                      warp                          53.58
     ---------------------------------------------------------------------- --------------- ------------------------------
 ```
+*  Nsight Compute GUI does not support OpenACC
 
 # NVIDIA visual profiler
 
