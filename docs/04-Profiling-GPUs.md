@@ -74,7 +74,81 @@ Total      Operations              Average            Minimum              Maxim
 
 Source: NVIDIA
 
+# NVIDIA Systems
+
+![](img/nsight_systems_gui.jpg){.center}
+
+
+# NVIDIA Metrics
+```
+srun -n 1 nv-nsight-cu-cli --devices 0 --query-metrics  > my_metrics.txt
+
+dram__bytes                 # of bytes accessed in DRAM
+dram__bytes_read            # of bytes read from DRAM
+dram__bytes_write           # of bytes written to DRAM
+dram__cycles_active         # of cycles where DRAM was active
+...
+tpc__cycles_active          # of cycles where TPC was active
+tpc__cycles_elapsed         # of cycles where TPC was active
+tpc__cycles_in_frame        # of cycles in user-defined frame
+tpc__cycles_in_region       # of cycles in user-defined region
+...
+```
+
+# Nsight Compute (I)
+```
+srun -n 1  nv-nsight-cu-cli ./jacobi
+...
+  update_65_gpu, 2020-Oct-18 23:42:06, Context 1, Stream 13
+   Section: GPU Speed Of Light
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    DRAM Frequency                                                           cycle/usecond                         849.78
+    SM Frequency                                                             cycle/nsecond                           1.25
+    Elapsed Cycles                                                                   cycle                        151,948
+    Memory [%]                                                                           %                          60.03
+    SOL DRAM                                                                             %                          43.34
+    Duration                                                                       usecond                         121.63
+    SOL L1/TEX Cache                                                                     %                          61.33
+    SOL L2 Cache                                                                         %                          36.73
+    SM Active Cycles                                                                 cycle                     148,450.91
+    SM [%]                                                                               %                          44.05
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    WRN   Memory is more heavily utilized than Compute: Look at the Memory Workload Analysis report section to see
+          where the memory system bottleneck is. Check memory replay (coalescing) metrics to make sure you're
+          efficiently utilizing the bytes transferred. Also consider whether it is possible to do more work per memory
+          access (kernel fusion) or whether there are values you can (re)compute.
+
+# Nsight Compute (II)
+```
+    Section: Launch Statistics
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    Block Size                                                                                                        128
+    Grid Size                                                                                                      45,000
+    Registers Per Thread                                                   register/thread                             30
+    Shared Memory Configuration Size                                                 Kbyte                          16.38
+    Driver Shared Memory Per Block                                              byte/block                              0
+    Dynamic Shared Memory Per Block                                            Kbyte/block                           1.02
+    Static Shared Memory Per Block                                              byte/block                              0
+    Threads                                                                         thread                      5,760,000
+    Waves Per SM                                                                                                    35.16
+    ---------------------------------------------------------------------- --------------- ------------------------------
+
+    Section: Occupancy
+    ---------------------------------------------------------------------- --------------- ------------------------------
+    Block Limit SM                                                                   block                             32
+    Block Limit Registers                                                            block                             16
+    Block Limit Shared Mem                                                           block                             96
+    Block Limit Warps                                                                block                             16
+    Theoretical Active Warps per SM                                                   warp                             64
+    Theoretical Occupancy                                                                %                            100
+    Achieved Occupancy                                                                   %                          83.71
+    Achieved Active Warps Per SM                                                      warp                          53.58
+    ---------------------------------------------------------------------- --------------- ------------------------------
+```
+
 # NVIDIA visual profiler
+
+* Nvprof is an older profiling tool
 
 ![](img/nvidia-visual-profiler.png){.center}
 
