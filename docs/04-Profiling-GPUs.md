@@ -21,61 +21,58 @@ lang:   en
 
 # NVIDIA NVPROF profiler
 
-- NVPROF is a command-line profiler that is included in OpenACC and CUDA
-  toolkits
-    - Can also do basic CPU profiling (CUDA 7.5 and newer)
+- NVIDIA released the Nsight recently for profiling. One of the main reasons for 
+  the new tool is scalability and, of course, new features 
+    - It is included with CUDA since 10.x
 - GPU profiling capabilities
     - High-level usage statistics
     - Timeline collection
     - Analysis metrics
 
 
-# CPU example
+# OpenACC example
 
 ```bash
-$ nvprof --cpu-profiling on --cpu-profiling-mode top-down ./cg
-
+$ nsys profile -t nvtx,openacc --stats=true -s cpu ./jacobi
 ...
+Generating CUDA API Statistics...
+CUDA API Statistics (nanoseconds)
 
-======== CPU profiling result (top down):
-Time(%) Time      Name
-79.56%  26.7635s  main
-74.58%  25.0876s  | matvec(matrix const &, vector const &, vector const &)
- 4.89%  1.64575s  | allocate_3d_poisson_matrix(matrix&, int)
- 0.09%  30.105ms  | free_matrix(matrix&)
- 0.09%  30.105ms  |   munmap
-15.96%  5.36875s  waxpby(double, vector const &, double, vector const &, vector const &)
- 4.18%  1.40491s  dot(vector const &, vector const &)
- 0.27%  90.315ms  __c_mset8
- 0.03%  10.035ms  free_vector(vector&)
- 0.03%  10.035ms    munmap
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  ---------------------------
+   77.1       108005341        1450         74486.4            1815          189044  cuStreamSynchronize                                                             
+   16.6        23232332           1      23232332.0        23232332        23232332  cuMemHostAlloc                                                                  
+    2.9         4037274        1091          3700.5            2815           24189  cuLaunchKernel                                                                  
+    0.8         1182112         361          3274.5            2911           21123  cuMemcpyDtoHAsync_v2                                                            
+    0.6          855308         361          2369.3            2065           10502  cuMemsetD32Async                                                                
+    0.6          813341           1        813341.0          813341          813341  cuMemAllocHost_v2                                                               
 
-======== Data collected at 100Hz frequency
-```
+Generating CUDA Kernel Statistics...
+CUDA Kernel Statistics (nanoseconds)
 
-# GPU example
+Time(%)      Total Time   Instances         Average         Minimum         Maximum  Name                                                                                                                          -------  --------------  ----------  --------------  --------------  --------------  ---------------------------
+   43.2        43864453         361        121508.2          118208          124671  update_65_gpu                                                                                                                    34.9        35436443         361         98161.9           94912          102015  update_76_gpu                                                                                                                    21.9        22215422         361         61538.6           60095           62720  update_65_gpu__red                                                                                                                                                                                                                                                                                                                               Generating CUDA Memory Operation Statistics...
+CUDA Memory Operation Statistics (nanoseconds)
 
-```bash
-$ nvprof ./cg
-...
+Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name                                                                            
+-------  --------------  ----------  --------------  --------------  --------------  --------------------------------
+   52.3          567609         361          1572.3            1535            2945  [CUDA memcpy DtoH]                                                              
+   47.7          517209         361          1432.7            1407            1760  [CUDA memset]                                                                   
 
-==22639== Profiling result:
-Time(%)     Time Calls      Avg       Min       Max  Name
-84.96%  3.73571s  101  36.987ms  36.952ms  37.003ms  matvec(matrix const &, ...
- 6.18%  271.72ms  302  899.73us  598.47us  905.44us  waxpby(double, vector ...
- 5.40%  237.64ms  389  610.91us     800ns  1.5132ms  [CUDA memcpy HtoD]
- 2.92%  128.37ms  200  641.87us  535.49us  771.52us  dot(vector const &, ...
- 0.53%  23.338ms  200  116.69us  116.03us  117.54us  dot(vector const &, ...
- 0.01%  427.78us  200  2.1380us  1.8880us  11.488us  [CUDA memcpy DtoH]
+CUDA Memory Operation Statistics (KiB)
 
-==22639== API calls:
-Time(%)     Time Calls      Avg       Min       Max  Name
-85.25%  4.01764s  812  4.9478ms  2.2690us  37.097ms  cuStreamSynchronize
- 6.45%  304.19ms    1  304.19ms  304.19ms  304.19ms  cuDevicePrimaryCtxRetain
- 3.43%  161.86ms    1  161.86ms  161.86ms  161.86ms  cuDevicePrimaryCtxRelease
+Total      Operations              Average            Minimum              Maximum    Name                                                                            
+-------  --------------  -------------------  -----------------  -------------------  -------------------------------
+1.410             361                0.004              0.004                0.004    [CUDA memcpy DtoH]                                                              
+1.410             361                0.004              0.004                0.004    [CUDA memset]         
 ...
 ```
 
+# NVIDIA Nsight workflow
+
+![](img/Nsight-Diagram.png){.center}
+
+Source: NVIDIA
 
 # NVIDIA visual profiler
 
