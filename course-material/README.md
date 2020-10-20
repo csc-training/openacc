@@ -17,10 +17,10 @@ Course [homepage](https://events.prace-ri.eu/event/1073/).
 
 | Day 2         |                              |
 | ------------- | ----------------------------
-|  9:00 - 10:00 | Data management
-| 10:00 - 10:15 | (break)
-| 10:15 - 11:00 | Profiling and performance optimisation
-| 10:30 - 16:00 | (self-study) exercises: jacobi, heat equation (profile)
+|  9:00 -  9:45 | Profiling and performance optimisation
+|  9:45 - 10:00 | (break)
+| 10:00 - 11:00 | Data management
+| 11:00 - 16:00 | (self-study) exercises: jacobi, heat equation (profile)
 | 15:30 - 16:00 | Advanced topic: Multiple GPUs with MPI
 | 16:00 - 17:00 | Q&A session
 
