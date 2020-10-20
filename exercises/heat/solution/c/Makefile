@@ -2,7 +2,7 @@ COMP=pgi
 
 ifeq ($(COMP),pgi)
 CC=pgcc
-CCFLAGS=-g -O3 -acc -ta=tesla,kepler+
+CCFLAGS=-g -O3 -acc -ta=tesla,cc70
 RUN=
 endif
 
