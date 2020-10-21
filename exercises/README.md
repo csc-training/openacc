@@ -22,10 +22,3 @@ In this session we do the following exercises
 
 - Analyze performance of exercise heat. Use [solution](/exercises/heat/solution) if you did not finish it on your own in the last session.
 - [NVIDIA Lab 3](/nvidia-labs/lab3/) [steps 2 - 5](/nvidia-labs/lab3/steps-2-5.md)
-
-## Advanced topics
-
-In this session we do the following exercises
-
-- [Curand](/exercises/curand)
-- [NVIDIA Lab 4](/nvidia-labs/lab4.pipelining/)
