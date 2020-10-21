@@ -138,7 +138,7 @@ int main(int argc, char **argv)
             update(u, unew, &norm, nx, ny);
             iter = iter + 2;
             if (iter % 100 == 0 || norm < eps) {
-                printf(": norm, eps= %18.16f %18.16f\n", norm, eps);
+                printf("%d : norm, eps= %18.16f %18.16f\n", iter, norm, eps);
             }
         }
 
@@ -149,8 +149,8 @@ int main(int argc, char **argv)
     mlups = 1.0e-6 * iter * nx * ny;
     t_end = clock();
     dt = ((float)(t_end - t_start)) / CLOCKS_PER_SEC;
-    printf("'Stencil: norm =%18.16f with iter = %d\n", norm, iter);
-    printf("'Stencil: Time =%18.16f sec, MLups/s=%18.16f\n", dt, (float) mlups / dt);
+    printf("Stencil: norm =%18.16f with iter = %d\n", norm, iter);
+    printf("Stencil: Time =%18.16f sec, MLups/s=%18.16f\n", dt, (float) mlups / dt);
 
     return 0;
 }

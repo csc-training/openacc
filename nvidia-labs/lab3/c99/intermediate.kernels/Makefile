@@ -1,5 +1,5 @@
 CC=pgc++
-CFLAGS=-fast -ta=tesla -Minfo=accel
+CFLAGS=-fast -ta=tesla:cc70 -Minfo=accel
 
 all: 
 	${CC} ${CFLAGS} main.cpp -o cg

@@ -185,9 +185,7 @@ host code
 ## C/C++
 
 ```c
-
 /* Compute y=a*x+y */
-
 void accdaxpy(int n, double a,
               const double * restrict x,
               double * restrict y)
@@ -196,6 +194,8 @@ void accdaxpy(int n, double a,
     for (int j=0; j<n; ++j)
         y[j] += a * x[j];
 }
+
+...
 
 /* An example call to accdaxpy */
 accdaxpy(1<<16, 3.14, x, y);
@@ -206,8 +206,7 @@ accdaxpy(1<<16, 3.14, x, y);
 ## Fortran
 
 ```fortran
-! Compute y=ax+y
-
+! Compute y=a*x+y
 subroutine accdaxpy(n, a, x, y)
   integer :: n, j
   real(kind=8) :: a, x(n), y(n)
@@ -219,8 +218,10 @@ subroutine accdaxpy(n, a, x, y)
   !$acc end kernels
 end subroutine accdaxpy
 
+...
+
 ! An example call to accdaxpy
-call accdaxpy(216, 3.14D0, x, y)
+call accdaxpy(65536, 3.14D0, x, y)
 ```
 </div>
 
@@ -255,15 +256,17 @@ call accdaxpy(216, 3.14D0, x, y)
 ## C/C++
 
 ```c
-
+/* Compute y=a*x+y */
 void accdaxpy(int n, double a,
               const double * restrict x,
               double * restrict y)
 {
-#pragma acc parallel loop
+    #pragma acc parallel loop
     for (int j=0; j<n; ++j)
         y[j] += a * x[j];
 }
+
+...
 
 /* An example call to accdaxpy */
 accdaxpy(1<<16, 3.14, x, y);
@@ -275,7 +278,6 @@ accdaxpy(1<<16, 3.14, x, y);
 
 ```fortran
 ! Compute y=a*x+y
-
 subroutine accdaxpy(n, a, x, y)
   integer :: n, j
   real(kind=8) :: a, x(n), y(n)
@@ -287,8 +289,10 @@ subroutine accdaxpy(n, a, x, y)
   !$acc end parallel loop
 end subroutine accdaxpy
 
+...
+
 ! An example call to accdaxpy
-call accdaxpy(216, 3.14D0, x, y)
+call accdaxpy(65536, 3.14D0, x, y)
 ```
 </div>
 

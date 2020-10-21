@@ -1,7 +1,7 @@
 ---
 title:  Profiling and performance optimisation
 author: CSC - IT Center for Science
-date:   2019-10
+date:   2020-10
 lang:   en
 ---
 
@@ -21,8 +21,8 @@ lang:   en
 
 # NVIDIA NVPROF profiler
 
-- NVIDIA released the Nsight recently for profiling. One of the main reasons for 
-  the new tool is scalability and, of course, new features 
+- NVIDIA released the Nsight recently for profiling. One of the main reasons for
+  the new tool is scalability and, of course, new features
     - It is included with CUDA since 10.x
 - GPU profiling capabilities
     - High-level usage statistics
@@ -38,14 +38,14 @@ $ nsys profile -t nvtx,openacc --stats=true -s cpu ./jacobi
 Generating CUDA API Statistics...
 CUDA API Statistics (nanoseconds)
 
-Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name                                                                            
+Time(%)      Total Time       Calls         Average         Minimum         Maximum  Name
 -------  --------------  ----------  --------------  --------------  --------------  ---------------------------
-   77.1       108005341        1450         74486.4            1815          189044  cuStreamSynchronize                                                             
-   16.6        23232332           1      23232332.0        23232332        23232332  cuMemHostAlloc                                                                  
-    2.9         4037274        1091          3700.5            2815           24189  cuLaunchKernel                                                                  
-    0.8         1182112         361          3274.5            2911           21123  cuMemcpyDtoHAsync_v2                                                            
-    0.6          855308         361          2369.3            2065           10502  cuMemsetD32Async                                                                
-    0.6          813341           1        813341.0          813341          813341  cuMemAllocHost_v2                                                               
+   77.1       108005341        1450         74486.4            1815          189044  cuStreamSynchronize
+   16.6        23232332           1      23232332.0        23232332        23232332  cuMemHostAlloc
+    2.9         4037274        1091          3700.5            2815           24189  cuLaunchKernel
+    0.8         1182112         361          3274.5            2911           21123  cuMemcpyDtoHAsync_v2
+    0.6          855308         361          2369.3            2065           10502  cuMemsetD32Async
+    0.6          813341           1        813341.0          813341          813341  cuMemAllocHost_v2
 
 Generating CUDA Kernel Statistics...
 CUDA Kernel Statistics (nanoseconds)
@@ -54,17 +54,17 @@ Time(%)      Total Time   Instances         Average         Minimum         Maxi
    43.2        43864453         361        121508.2          118208          124671  update_65_gpu                                                                                                                    34.9        35436443         361         98161.9           94912          102015  update_76_gpu                                                                                                                    21.9        22215422         361         61538.6           60095           62720  update_65_gpu__red                                                                                                                                                                                                                                                                                                                               Generating CUDA Memory Operation Statistics...
 CUDA Memory Operation Statistics (nanoseconds)
 
-Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name                                                                            
+Time(%)      Total Time  Operations         Average         Minimum         Maximum  Name
 -------  --------------  ----------  --------------  --------------  --------------  --------------------------------
-   52.3          567609         361          1572.3            1535            2945  [CUDA memcpy DtoH]                                                              
-   47.7          517209         361          1432.7            1407            1760  [CUDA memset]                                                                   
+   52.3          567609         361          1572.3            1535            2945  [CUDA memcpy DtoH]
+   47.7          517209         361          1432.7            1407            1760  [CUDA memset]
 
 CUDA Memory Operation Statistics (KiB)
 
-Total      Operations              Average            Minimum              Maximum    Name                                                                            
+Total      Operations              Average            Minimum              Maximum    Name
 -------  --------------  -------------------  -----------------  -------------------  -------------------------------
-1.410             361                0.004              0.004                0.004    [CUDA memcpy DtoH]                                                              
-1.410             361                0.004              0.004                0.004    [CUDA memset]         
+1.410             361                0.004              0.004                0.004    [CUDA memcpy DtoH]
+1.410             361                0.004              0.004                0.004    [CUDA memset]
 ...
 ```
 
@@ -80,6 +80,7 @@ Source: NVIDIA
 
 
 # NVIDIA Metrics
+
 ```
 srun -n 1 nv-nsight-cu-cli --devices 0 --query-metrics  > my_metrics.txt
 
@@ -96,6 +97,7 @@ tpc__cycles_in_region       # of cycles in user-defined region
 ```
 
 # Nsight Compute CLI (I)
+
 ```
 srun -n 1  nv-nsight-cu-cli ./jacobi
 ...
@@ -120,6 +122,8 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
 ```
 
 # Nsight Compute CLI (II)
+
+<small>
 ```
     Section: Launch Statistics
     ---------------------------------------------------------------------- --------------- ------------------------------
@@ -146,11 +150,14 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
     Achieved Active Warps Per SM                                                      warp                          53.58
     ---------------------------------------------------------------------- --------------- ------------------------------
 ```
-*  Nsight Compute GUI does not support OpenACC
+
+- Nsight Compute GUI does not support OpenACC
+</small>
+
 
 # NVIDIA visual profiler
 
-* Nvprof is an older profiling tool
+- Nvprof is an older profiling tool
 
 ![](img/nvidia-visual-profiler.png){.center}
 

@@ -3,8 +3,8 @@ COMP=pgi
 ifeq ($(COMP),pgi)
 CC=pgcc
 FC=pgf90
-CCFLAGS=-g -acc -O3 -ta=tesla,kepler+
-FCFLAGS=-g -acc -O3 -ta=tesla,kepler+
+CCFLAGS=-g -acc -O3 -ta=tesla:cc70
+FCFLAGS=-g -acc -O3 -ta=tesla:cc70
 # FCFLAGS=-g -Mbounds
 RUN=
 endif
