@@ -103,18 +103,18 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
 ...
   update_65_gpu, 2020-Oct-18 23:42:06, Context 1, Stream 13
    Section: GPU Speed Of Light
-    ---------------------------------------------------------------------- --------------- ------------------------------
-    DRAM Frequency                                                           cycle/usecond                         849.78
-    SM Frequency                                                             cycle/nsecond                           1.25
-    Elapsed Cycles                                                                   cycle                        151,948
-    Memory [%]                                                                           %                          60.03
-    SOL DRAM                                                                             %                          43.34
-    Duration                                                                       usecond                         121.63
-    SOL L1/TEX Cache                                                                     %                          61.33
-    SOL L2 Cache                                                                         %                          36.73
-    SM Active Cycles                                                                 cycle                     148,450.91
-    SM [%]                                                                               %                          44.05
-    ---------------------------------------------------------------------- --------------- ------------------------------
+    ------------------------------------------------------------ --------------- --------------------------
+    DRAM Frequency                                                 cycle/usecond                    849.78
+    SM Frequency                                                   cycle/nsecond                      1.25
+    Elapsed Cycles                                                         cycle                   151,948
+    Memory [%]                                                                 %                     60.03
+    SOL DRAM                                                                   %                     43.34
+    Duration                                                             usecond                    121.63
+    SOL L1/TEX Cache                                                           %                     61.33
+    SOL L2 Cache                                                               %                     36.73
+    SM Active Cycles                                                        cycle               148,450.91
+    SM [%]                                                                      %                    44.05
+    ------------------------------------------------------------ --------------- --------------------------
     WRN   Memory is more heavily utilized than Compute: Look at the Memory Workload Analysis report section to see
           where the memory system bottleneck is. Check memory replay (coalescing) metrics to make sure you're
           efficiently utilizing the bytes transferred. Also consider whether it is possible to do more work per memory
