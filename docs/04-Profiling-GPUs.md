@@ -190,7 +190,7 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
     SM [%]                                                                      %                    44.05
     ------------------------------------------------------------ --------------- --------------------------
     WRN   Memory is more heavily utilized than Compute: Look at the Memory Workload Analysis report section to see
-          where the memory system bottleneck is. Check memory replay (coalescing) metrics to make sure you're
+          where the memory system bottleneck is. Check memory replay (coalescing) metrics to make sure you are
           efficiently utilizing the bytes transferred. Also consider whether it is possible to do more work per memory
           access (kernel fusion) or whether there are values you can (re)compute.
 ```
