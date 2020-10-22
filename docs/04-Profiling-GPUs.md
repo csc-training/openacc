@@ -18,16 +18,90 @@ lang:   en
 
 # Profiling tools {.section}
 
-
 # NVIDIA NVPROF profiler
 
-- NVIDIA released the Nsight recently for profiling. One of the main reasons for
-  the new tool is scalability and, of course, new features
-    - It is included with CUDA since 10.x
+- NVPROF is a command-line profiler that is included in OpenACC and CUDA
+  toolkits
+    - Can also do basic CPU profiling (CUDA 7.5 and newer)
 - GPU profiling capabilities
     - High-level usage statistics
     - Timeline collection
     - Analysis metrics
+
+
+# CPU example
+
+```bash
+$ nvprof --cpu-profiling on --cpu-profiling-mode top-down ./cg
+
+...
+
+======== CPU profiling result (top down):
+Time(%) Time      Name
+79.56%  26.7635s  main
+74.58%  25.0876s  | matvec(matrix const &, vector const &, vector const &)
+ 4.89%  1.64575s  | allocate_3d_poisson_matrix(matrix&, int)
+ 0.09%  30.105ms  | free_matrix(matrix&)
+ 0.09%  30.105ms  |   munmap
+15.96%  5.36875s  waxpby(double, vector const &, double, vector const &, vector const &)
+ 4.18%  1.40491s  dot(vector const &, vector const &)
+ 0.27%  90.315ms  __c_mset8
+ 0.03%  10.035ms  free_vector(vector&)
+ 0.03%  10.035ms    munmap
+
+======== Data collected at 100Hz frequency
+```
+# GPU example
+
+```bash
+$ nvprof ./cg
+...
+
+==22639== Profiling result:
+Time(%)     Time Calls      Avg       Min       Max  Name
+84.96%  3.73571s  101  36.987ms  36.952ms  37.003ms  matvec(matrix const &, ...
+ 6.18%  271.72ms  302  899.73us  598.47us  905.44us  waxpby(double, vector ...
+ 5.40%  237.64ms  389  610.91us     800ns  1.5132ms  [CUDA memcpy HtoD]
+ 2.92%  128.37ms  200  641.87us  535.49us  771.52us  dot(vector const &, ...
+ 0.53%  23.338ms  200  116.69us  116.03us  117.54us  dot(vector const &, ...
+ 0.01%  427.78us  200  2.1380us  1.8880us  11.488us  [CUDA memcpy DtoH]
+
+==22639== API calls:
+Time(%)     Time Calls      Avg       Min       Max  Name
+85.25%  4.01764s  812  4.9478ms  2.2690us  37.097ms  cuStreamSynchronize
+ 6.45%  304.19ms    1  304.19ms  304.19ms  304.19ms  cuDevicePrimaryCtxRetain
+ 3.43%  161.86ms    1  161.86ms  161.86ms  161.86ms  cuDevicePrimaryCtxRelease
+...
+```
+
+# NVIDIA visual profiler
+
+- Nvprof is an older profiling tool
+
+![](img/nvidia-visual-profiler.png){.center}
+
+
+# Details on OpenACC compute construct
+
+![](img/profiler-compute-construct.png){.center}
+
+
+# Details on memory copy
+
+![](img/profiler-memory-copy.png){.center}
+
+
+
+# NVIDIA profiler
+
+- NVIDIA released the Nsight recently for profiling. One of the main reasons for
+  the new tool is scalability and, of course, new features
+    - It is included with CUDA since 10.x (some commands based on newer version)
+- GPU profiling capabilities
+    - High-level usage statistics
+    - Timeline collection
+    - Analysis metrics
+    - Roofline model
 
 
 # OpenACC example
@@ -153,23 +227,6 @@ srun -n 1  nv-nsight-cu-cli ./jacobi
 
 - Nsight Compute GUI does not support OpenACC
 </small>
-
-
-# NVIDIA visual profiler
-
-- Nvprof is an older profiling tool
-
-![](img/nvidia-visual-profiler.png){.center}
-
-
-# Details on OpenACC compute construct
-
-![](img/profiler-compute-construct.png){.center}
-
-
-# Details on memory copy
-
-![](img/profiler-memory-copy.png){.center}
 
 
 # Optimization {.section}
