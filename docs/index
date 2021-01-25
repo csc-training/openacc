@@ -1,0 +1,19 @@
+# List of PDFs to jam together
+#  an index file for jam-it.sh (https://github.com/mlouhivu/jam-it)
+
+@title-course.pdf
+
+@title-gpu-intro.pdf
+01-GPU-intro.pdf
+
+@title-openacc-intro.pdf
+02-OpenACC-intro.pdf
+
+@title-openacc-data.pdf
+03-OpenACC-data.pdf
+
+@title-profiling.pdf
+04-Profiling-GPUs.pdf
+
+@title-multi-gpu.pdf
+06-Multiple-GPUs.pdf
